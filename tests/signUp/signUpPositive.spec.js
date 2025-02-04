@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import { SignUpPage } from '../../src/ui/pages/auth/SignUpPage';
 import { HomePage } from '../../src/ui/pages/HomePage';
-import { generateNewUserData } from '../../src/common/helpers/generateNewUserData';
+import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 
 test.describe('Sign up positive tests', () => {
   let signUpPage;

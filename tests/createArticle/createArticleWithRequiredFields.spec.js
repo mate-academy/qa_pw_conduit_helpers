@@ -1,8 +1,8 @@
 import { test } from '@playwright/test';
 import { HomePage } from '../../src/ui/pages/HomePage';
 import { CreateArticlePage } from '../../src/ui/pages/article/CreateArticlePage';
-import { generateNewUserData } from '../../src/common/helpers/generateNewUserData';
-import { generateNewArticleData } from '../../src/common/helpers/generateNewArticleData';
+import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
+import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 

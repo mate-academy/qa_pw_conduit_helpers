@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
 import { SignInPage } from '../../src/ui/pages/auth/SignInPage';
-import { generateNewUserData } from '../../src/common/helpers/generateNewUserData';
+import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import {
   EMPTY_EMAIL_MESSAGE,
   EMPTY_PASSWORD_MESSAGE,
