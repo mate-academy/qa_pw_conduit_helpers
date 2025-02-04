@@ -7,12 +7,12 @@
 
 ## Main task:
 1. Add action function for new article creation:
-- Create the function structure: src/actions/articles/;
-- Create the function createNewArticle.js;
+- Create the function structure: src/actions/article/;
+- Create the `createNewArticle` function in the new file `./src/actions/article/createNewArticle.js`;
 - Ensure your function covers both cases when creating an article with tags and without;  
-- Use signIn/Up functions as an example;
+- Use `signUpUser` function as an example;
 - Use just created function for the new tests.  
-2. Create new tests for the Conduit:
+2. Create new tests for the Conduit `Edit article` feature:
 - *Edit the article title for the existing article;*
 - *Edit the article description for the existing article;*
 - *Edit the article text for the existing article;*
@@ -22,9 +22,11 @@
 - *Remove an article title for the existing article;*
 - *Remove an article description for the existing article;*
 - *Remove an article text for the existing article;*
-4. Make sure to add a test.step for each class method. 
-5. Think on the extra tests for the `Edit article` feature and add them as well.
-6. Re-run all your tests and make sure they pass after the updates. 
+4. Make sure to add a `test.step` for each class method. 
+5. Make sure to add all the error messages to the `constans` folder.
+6. Make sure to use existing `generateNewUserData` & `signUpUser` functions for each test preconditions.
+7. Think on the extra tests for the `Edit article` feature and add them as well.
+8. Re-run all your tests and make sure they pass after the updates. 
 
 
 ## Task Reporting: 
