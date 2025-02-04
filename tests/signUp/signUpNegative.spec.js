@@ -1,40 +1,43 @@
 import { test } from '@playwright/test';
-import { SignUpPage } from '../../src/pages/SignUpPage';
+import { SignUpPage } from '../../src/ui/pages/auth/SignUpPage';
+import { generateNewUserData } from '../../src/common/helpers/generateNewUserData';
+import {
+  EMPTY_USERNAME_MESSAGE,
+  INVALID_EMAIL_MESSAGE,
+  EMPTY_PASSWORD_MESSAGE,
+} from '../../src/ui/constants/authErrorMessages';
 
 test.describe('Sign up negative tests', () => {
   let signUpPage;
+  let user;
 
   test.beforeEach(async ({ page }) => {
     signUpPage = new SignUpPage(page);
     await signUpPage.open();
+    user = generateNewUserData();
   });
 
   test('Sign up with empty username', async () => {
-    const errorMessage = `username:Username must start with a letter,\
-       have no spaces, and be 2 - 40 characters.`;
-
-    await signUpPage.fillEmailField('test@gmail.com');
-    await signUpPage.fillPasswordField('newpass123!');
+    await signUpPage.fillEmailField(user.email);
+    await signUpPage.fillPasswordField(user.password);
     await signUpPage.clickSignUpButton();
 
-    await signUpPage.assertErrorMessageContainsText(errorMessage);
+    await signUpPage.assertErrorMessageContainsText(EMPTY_USERNAME_MESSAGE);
   });
 
   test('Sign up with empty email', async () => {
-    await signUpPage.fillUsernameField('newuser');
-    await signUpPage.fillPasswordField('newpass123!');
+    await signUpPage.fillUsernameField(user.username);
+    await signUpPage.fillPasswordField(user.password);
     await signUpPage.clickSignUpButton();
 
-    await signUpPage.assertErrorMessageContainsText(
-      `email:This email does not seem valid.`,
-    );
+    await signUpPage.assertErrorMessageContainsText(INVALID_EMAIL_MESSAGE);
   });
 
   test('Sign up with empty password', async () => {
-    await signUpPage.fillUsernameField('newuser');
-    await signUpPage.fillEmailField('test@gmail.com');
+    await signUpPage.fillUsernameField(user.username);
+    await signUpPage.fillEmailField(user.email);
     await signUpPage.clickSignUpButton();
 
-    await signUpPage.assertErrorMessageContainsText(`password:can't be blank`);
+    await signUpPage.assertErrorMessageContainsText(EMPTY_PASSWORD_MESSAGE);
   });
 });

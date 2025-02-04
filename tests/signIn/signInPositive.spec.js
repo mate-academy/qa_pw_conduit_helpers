@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
-import { SignInPage } from '../../src/pages/SignInPage';
-import { HomePage } from '../../src/pages/HomePage';
+import { SignInPage } from '../../src/ui/pages/auth/SignInPage';
+import { HomePage } from '../../src/ui/pages/HomePage';
 
 test.describe('Sign up positive tests', () => {
   let signInPage;

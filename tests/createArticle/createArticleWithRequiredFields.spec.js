@@ -2,27 +2,35 @@ import { test } from '@playwright/test';
 import { HomePage } from '../../src/ui/pages/HomePage';
 import { CreateArticlePage } from '../../src/ui/pages/article/CreateArticlePage';
 import { generateNewUserData } from '../../src/common/helpers/generateNewUserData';
+import { generateNewArticleData } from '../../src/common/helpers/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
-import { TITLE_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
+import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 
 test.describe('Create an article', () => {
   let homePage;
   let createArticlePage;
+  let viewArticlePage;
+  let article;
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
     createArticlePage = new CreateArticlePage(page);
+    viewArticlePage = new ViewArticlePage(page);
+    article = generateNewArticleData();
     const user = generateNewUserData();
 
     await signUpUser(page, user);
   });
 
-  test('Creat an article without required fields', async () => {
+  test('Creat an article with required fields', async () => {
     await homePage.clickNewArticleLink();
 
+    await createArticlePage.fillTitleField(article.title);
+    await createArticlePage.fillDescriptionField(article.description);
+    await createArticlePage.fillTextField(article.text);
     await createArticlePage.clickPublishArticleButton();
-    await createArticlePage.assertErrorMessageContainsText(
-      TITLE_CANNOT_BE_EMPTY,
-    );
+
+    await viewArticlePage.assertArticleTitle(article.title);
+    await viewArticlePage.assertArticleText(article.text);
   });
 });

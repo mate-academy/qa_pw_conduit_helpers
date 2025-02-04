@@ -1,4 +1,4 @@
-# Practice task: Conduit article tests with steps
+# Practice task: Conduit Edit Article tests
 
 ## Preparation:
 1. Open the forked repo in VSCode.
@@ -6,20 +6,24 @@
 3. Run the installation commands `npm ci` & `npx playwright install`.
 
 ## Main task:
-1. Add action method for new article creation
-- Create the folder structure: src/actions/articles/
-- Create the method createNewArticle.js
-- Ensure your method covers both cases when creating an article with tags and without. 
-2. Create new tests for the conduit article view and use just created method for preconditions. 
-- Assert the article title, description, and text can be edited for the article without tags. 
-- Assert the article tag can be edited for the article without tags. 
-- Assert the article tags can be extended for the article with tags. 
-- Assert the article tag can be removed on edit.
-- Assert the error message is showing when trying to remove the article title on edit.
-- Assert the error message is showing when trying to remove the article description on edit.
-- Assert the error message is showing when trying to remove the article text on edit.
-4. Use signIn/Up methods as an example.
-5. Make sure to add a test.step for each method as a wrapper. 
+1. Add action function for new article creation:
+- Create the function structure: src/actions/articles/;
+- Create the function createNewArticle.js;
+- Ensure your function covers both cases when creating an article with tags and without;  
+- Use signIn/Up functions as an example;
+- Use just created function for the new tests.  
+2. Create new tests for the Conduit:
+- *Edit the article title for the existing article;*
+- *Edit the article description for the existing article;*
+- *Edit the article text for the existing article;*
+- *Add the tag for the existing article without tags;* 
+- *Add the tag for the existing article with tags;* 
+- *Remove an article tag for the existing article with tag;*
+- *Remove an article title for the existing article;*
+- *Remove an article description for the existing article;*
+- *Remove an article text for the existing article;*
+4. Make sure to add a test.step for each class method. 
+5. Think on the extra tests for the `Edit article` feature and add them as well.
 6. Re-run all your tests and make sure they pass after the updates. 
 
 

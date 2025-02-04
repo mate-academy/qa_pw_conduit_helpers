@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
-import { faker } from '@faker-js/faker';
-import { SignUpPage } from '../../src/pages/SignUpPage';
-import { HomePage } from '../../src/pages/HomePage';
+import { SignUpPage } from '../../src/ui/pages/auth/SignUpPage';
+import { HomePage } from '../../src/ui/pages/HomePage';
+import { generateNewUserData } from '../../src/common/helpers/generateNewUserData';
 
 test.describe('Sign up positive tests', () => {
   let signUpPage;
@@ -11,12 +11,7 @@ test.describe('Sign up positive tests', () => {
   test.beforeEach(async ({ page }) => {
     signUpPage = new SignUpPage(page);
     homePage = new HomePage(page);
-
-    user = {
-      username: `${faker.person.firstName()}_${faker.person.lastName()}`,
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-    };
+    user = generateNewUserData();
   });
 
   test('Successful `Sign up` flow test', async () => {
