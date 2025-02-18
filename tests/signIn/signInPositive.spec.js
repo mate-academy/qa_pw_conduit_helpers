@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import { SignInPage } from '../../src/ui/pages/auth/SignInPage';
 import { HomePage } from '../../src/ui/pages/HomePage';
 
-test.describe('Sign up positive tests', () => {
+test.describe('Sign in positive tests', () => {
   let signInPage;
   let homePage;
   let user;
