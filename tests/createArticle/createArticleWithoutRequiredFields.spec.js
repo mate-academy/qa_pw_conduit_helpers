@@ -5,24 +5,20 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { TITLE_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
 
-test.describe('Create an article', () => {
-  let homePage;
-  let createArticlePage;
+let homePage;
+let createArticlePage;
 
-  test.beforeEach(async ({ page }) => {
-    homePage = new HomePage(page);
-    createArticlePage = new CreateArticlePage(page);
-    const user = generateNewUserData();
+test.beforeEach(async ({ page }) => {
+  homePage = new HomePage(page);
+  createArticlePage = new CreateArticlePage(page);
+  const user = generateNewUserData();
 
-    await signUpUser(page, user);
-  });
+  await signUpUser(page, user);
+});
 
-  test('Creat an article without required fields', async () => {
-    await homePage.clickNewArticleLink();
+test('Creat an article without required fields', async () => {
+  await homePage.clickNewArticleLink();
 
-    await createArticlePage.clickPublishArticleButton();
-    await createArticlePage.assertErrorMessageContainsText(
-      TITLE_CANNOT_BE_EMPTY,
-    );
-  });
+  await createArticlePage.clickPublishArticleButton();
+  await createArticlePage.assertErrorMessageContainsText(TITLE_CANNOT_BE_EMPTY);
 });
