@@ -22,9 +22,9 @@
 - *Remove an article title for the existing article;*
 - *Remove an article description for the existing article;*
 - *Remove an article text for the existing article;*
-4. Make sure to add a `test.step` for each class method. 
-5. Make sure to add all the error messages to the `constans` folder.
-6. Make sure to use existing `generateNewUserData` & `signUpUser` functions for each test preconditions.
+4. Add a `test.step` for each class method. 
+5. Add all the error messages to the `constans` folder.
+6. Use existing `generateNewUserData` & `signUpUser` functions for each test precondition.
 7. Think on the extra tests for the `Edit article` feature and add them as well.
 8. Re-run all your tests and make sure they pass after the updates. 
 
