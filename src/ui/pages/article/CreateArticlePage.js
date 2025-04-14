@@ -11,28 +11,42 @@ export class CreateArticlePage {
     });
     this.errorMessage = page.getByRole('list').nth(1);
     this.tagsField = page.getByPlaceholder('Enter tags');
+    this.updateArticleButton = page.getByRole('button', {
+      name: 'Update Article',
+    });
+  }
+
+  async clickUpdateArticleButton() {
+    await test.step(`Click the 'Update Article' button`, async () => {
+      await this.updateArticleButton.click();
+      await this.page.waitForURL('**/article/**');
+    });
   }
 
   async fillTitleField(title) {
     await test.step(`Fill the 'Title' field`, async () => {
+      await this.titleField.clear();
       await this.titleField.fill(title);
     });
   }
 
   async fillDescriptionField(description) {
     await test.step(`Fill the 'Description' field`, async () => {
+      await this.descriptionField.clear();
       await this.descriptionField.fill(description);
     });
   }
 
   async fillTextField(text) {
     await test.step(`Fill the 'Text' field`, async () => {
+      await this.textField.clear();
       await this.textField.fill(text);
     });
   }
 
   async fillTagsField(tag) {
     await test.step(`Fill the 'Tags' field`, async () => {
+      await this.tagsField.clear();
       await this.tagsField.fill(tag);
       await this.page.keyboard.press('Enter');
     });
