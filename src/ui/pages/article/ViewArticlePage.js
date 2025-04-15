@@ -7,6 +7,13 @@ export class ViewArticlePage {
     this.editArticleButton = page
     .getByRole('link', { name: 'Edit Article' })
     .first();
+    this.articleTagList = page.locator('.tag-list');
+  }
+
+  async assertArticleTagsToContainText(tag) {
+    await test.step(`Assert the article has tag`, async () => {
+      await expect(this.articleTagList).toContainText(tag);
+    });
   }
 
   async reload() {
@@ -15,7 +22,7 @@ export class ViewArticlePage {
     });
   }
 
-  async assertArticleTitleIsVisible(title) {
+  async assertArticleTitleToContainText(title) {
     await test.step(`Assert the article has correct title'`, async () => {
       await expect(this.articleTitleHeader).toContainText(title);
     });

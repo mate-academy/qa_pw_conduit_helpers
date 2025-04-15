@@ -14,5 +14,5 @@ export async function createNewArticle(page, article) {
   }
 
   await articlePage.clickPublishArticleButton();
-  await viewArticlePage.assertArticleTitleIsVisible(article.title);
+  await viewArticlePage.assertArticleTitleToContainText(article.title);
 }
