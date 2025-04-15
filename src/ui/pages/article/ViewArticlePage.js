@@ -11,7 +11,7 @@ export class ViewArticlePage {
   }
 
   async assertArticleTagsToContainText(tag) {
-    await test.step(`Assert the article has tag`, async () => {
+    await test.step(`Assert the article has tag - ${tag}`, async () => {
       await expect(this.articleTagList).toContainText(tag);
     });
   }

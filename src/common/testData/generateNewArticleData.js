@@ -8,5 +8,5 @@ export function generateNewArticleData(tagNumber = 0) {
     description: faker.lorem.sentence(4),
     text: faker.lorem.sentences(2),
     tags,
-  };;
+  };
 }
