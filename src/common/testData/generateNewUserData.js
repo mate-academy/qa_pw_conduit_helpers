@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 
 export function generateNewUserData() {
   const user = {
-    username: `${faker.person.firstName()}_${faker.person.lastName()}`,
+    username: `username_${faker.lorem.word()}_${faker.string.alpha(5)}`,
     email: faker.internet.email(),
     password: faker.internet.password(),
   };
