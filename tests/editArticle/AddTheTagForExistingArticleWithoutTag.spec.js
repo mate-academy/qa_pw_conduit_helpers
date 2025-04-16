@@ -33,6 +33,7 @@ test('Add the tag to the article without tags', async () => {
   await viewArticlePage.clickEditArticleButton();
   await createArticlePage.fillTagsField(newTag);
   await createArticlePage.clickUpdateArticleButton();
+  await viewArticlePage.assertArticleTitleToContainText(article.title);
   await viewArticlePage.reload();
   await viewArticlePage.assertArticleTagsToContainText(newTag);
 });

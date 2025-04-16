@@ -33,6 +33,7 @@ test('Edit the article text for the existing article', async () => {
   await viewArticlePage.clickEditArticleButton();
   await createArticlePage.fillTextField(newText);
   await createArticlePage.clickUpdateArticleButton();
+  await viewArticlePage.assertArticleTitleToContainText(article.title);
   await viewArticlePage.reload();
   await viewArticlePage.assertArticleTextIsVisible(newText);
 });

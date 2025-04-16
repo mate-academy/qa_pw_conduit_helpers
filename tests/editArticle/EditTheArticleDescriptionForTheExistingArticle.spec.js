@@ -33,7 +33,7 @@ test('Edit the article description for the existing article', async () => {
   await viewArticlePage.clickEditArticleButton();
   await createArticlePage.fillDescriptionField(newDescription);
   await createArticlePage.clickUpdateArticleButton();
-  await viewArticlePage.assertArticleTitleIsVisible(article.title);
+  await viewArticlePage.assertArticleTitleToContainText(article.title);
   await homePage.open();
   await homePage.clickGlobalFeedTab();
   await homePage.assertArticlePreviewToContainText(newDescription);

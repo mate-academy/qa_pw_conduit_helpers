@@ -10,6 +10,7 @@ import { HomePage } from '../../src/ui/pages/HomePage';
 let createArticlePage;
 let viewArticlePage;
 let homePage;
+let article;
 const newTitle = 'New title';
 
 test.beforeEach(async ({ page }) => {
@@ -17,7 +18,7 @@ test.beforeEach(async ({ page }) => {
   viewArticlePage = new ViewArticlePage(page);
   homePage = new HomePage(page);
   const user = generateNewUserData();
-  const article = generateNewArticleData();
+  article = generateNewArticleData();
   await signUpUser(page, user);
   await homePage.clickNewArticleLink();
   await createNewArticle(page, article);
@@ -31,6 +32,7 @@ test('Edit the article title for the existing article', async () => {
   await viewArticlePage.clickEditArticleButton();
   await createArticlePage.fillTitleField(newTitle);
   await createArticlePage.clickUpdateArticleButton();
+  await viewArticlePage.assertArticleTitleToContainText(article.title);
   await viewArticlePage.reload();
-  await viewArticlePage.assertArticleTitleIsVisible(newTitle);
+  await viewArticlePage.assertArticleTitleToContainText(newTitle);
 });

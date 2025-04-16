@@ -29,13 +29,13 @@ export class ViewArticlePage {
   }
 
   async assertArticleTitleToContainText(title) {
-    await test.step(`Assert the article has correct title'`, async () => {
+    await test.step(`Assert the article has title - ${title}`, async () => {
       await expect(this.articleTitleHeader).toContainText(title);
     });
   }
 
   async assertArticleTextIsVisible(text) {
-    await test.step(`Assert the article has correct text'`, async () => {
+    await test.step(`Assert the article has text - ${text}`, async () => {
       await expect(this.page.getByText(text)).toBeVisible();
     });
   }
