@@ -14,6 +14,16 @@ export class CreateArticlePage {
     this.updateArticleButton = page.getByRole('button', {
       name: 'Update Article',
     });
+    this.tagList = page.locator('.tag-list');
+  }
+
+  async removeTagFromTagList(tag) {
+    await test.step(`Remove the '${tag}' tag from the tag list`, async () => {
+      const tagElement = await this.tagList.getByText(tag);
+      const removeButton = await tagElement.locator('.ion-close-round');
+      await removeButton.click();
+      await expect(this.tagList).not.toContainText(tag);
+    });
   }
 
   async clickUpdateArticleButton() {

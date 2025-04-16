@@ -10,6 +10,12 @@ export class ViewArticlePage {
     this.articleTagList = page.locator('.tag-list');
   }
 
+  async assertArticleTagsNotToContainText(tag) {
+    await test.step(`Assert the article has no tag - ${tag}`, async () => {
+      await expect(this.articleTagList).not.toContainText(tag);
+    });
+  }
+
   async assertArticleTagsToContainText(tag) {
     await test.step(`Assert the article has tag - ${tag}`, async () => {
       await expect(this.articleTagList).toContainText(tag);
