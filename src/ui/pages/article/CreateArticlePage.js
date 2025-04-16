@@ -29,7 +29,6 @@ export class CreateArticlePage {
   async clickUpdateArticleButton() {
     await test.step(`Click the 'Update Article' button`, async () => {
       await this.updateArticleButton.click();
-      await this.page.waitForURL('**/article/**');
     });
   }
 
