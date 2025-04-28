@@ -21,7 +21,7 @@ Add an action function for creating new articles:
 
 ## Task 2
 
-1. Create new tests for the Conduit `Edit article` feature::
+1. Create new tests for the Conduit `Edit article` feature:
 
     - *Edit the article title for the existing article*
     - *Edit the article description for the existing article*
@@ -31,7 +31,7 @@ Add an action function for creating new articles:
     - *Remove an article tag for the existing article with tag*
     - *Remove an article title for the existing article*
     - *Remove an article description for the existing article*
-    - *Remove an article text for the existing article*
+    - *Remove the article text for the existing article*
 
 2. Add a `test.step` for each class method. 
 3. Add all the error messages to the `constants` folder.
