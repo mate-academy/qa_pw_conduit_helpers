@@ -13,8 +13,8 @@
 
 Add an action function for creating new articles:
 
-1. Create the function structure: `src/actions/article/`.
-2. Create the `createNewArticle` function in the new file `./src/actions/article/createNewArticle.js`.
+1. Create the function structure: `src/ui/actions/article/`.
+2. Create the `createNewArticle` function in the new file `./src/ui/actions/article/createNewArticle.js`.
 3. Ensure your function covers both cases when creating an article with tags and without.
 4. Use the `signUpUser` function as an example.
 5. Use the created function for the new tests.
