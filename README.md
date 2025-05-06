@@ -26,14 +26,14 @@ Add an action function for creating new articles:
     - *Edit the article title for the existing article*
     - *Edit the article description for the existing article*
     - *Edit the article text for the existing article*
-    - *Add the tag for the existing article without tags* 
-    - *Add the tag for the existing article with tags* 
+    - *Add the tag for the existing article without tags*
+    - *Add the tag for the existing article with tags*
     - *Remove an article tag for the existing article with tag*
     - *Remove an article title for the existing article*
     - *Remove an article description for the existing article*
     - *Remove the article text for the existing article*
 
-2. Add a `test.step` for each class method. 
+2. Add a `test.step` for each class method.
 3. Add all the error messages to the `constants` folder.
 4. Use existing `generateNewUserData` and `signUpUser` functions for each test precondition.
 5. Try to come up with other useful tests for the `Edit article` feature, and add them as well.

@@ -6,36 +6,34 @@ import { generateNewArticleData } from '../../src/common/testData/generateNewArt
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
+import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
+import { faker } from '@faker-js/faker';
 
 let homePage;
 let createArticlePage;
 let viewArticlePage;
+let editArticlePage;
 let article;
+let newDescription = faker.lorem.words();
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
   createArticlePage = new CreateArticlePage(page);
   viewArticlePage = new ViewArticlePage(page);
+  editArticlePage = new EditArticlePage(page);
   article = generateNewArticleData();
+
   const user = generateNewUserData();
-
   await signUpUser(page, user);
-});
-
-test('Creat an article without tegs', async ({ page }) => {
   await homePage.clickNewArticleLink();
   await createNewArticle(page, article);
-
-  await viewArticlePage.assertArticleTitleIsVisible(article.title);
-  await viewArticlePage.assertArticleTextIsVisible(article.text);
 });
 
-test('Creat an article with tags', async ({ page }) => {
-  const article = generateNewArticleData(3);
+test('Edit the article description for the existing article', async () => {
+  await editArticlePage.open();
+  await editArticlePage.editArticleDescriptionField(newDescription);
+  await editArticlePage.clickUpdateArticleButton();
+  await viewArticlePage.waitForNavigationAndReload();
 
-  await homePage.clickNewArticleLink();
-  await createNewArticle(page, article);
-
-  await viewArticlePage.assertArticleTitleIsVisible(article.title);
-  await viewArticlePage.assertArticleTextIsVisible(article.text);
+  await viewArticlePage.assertArticleDescription(newDescription);
 });

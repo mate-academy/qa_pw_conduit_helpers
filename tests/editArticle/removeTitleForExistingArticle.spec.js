@@ -6,36 +6,34 @@ import { generateNewArticleData } from '../../src/common/testData/generateNewArt
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
+import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
+import {
+  TITLE_CANNOT_BE_EMPTY,
+} from '../../src/ui/constants/articleErrorMessages';
 
 let homePage;
 let createArticlePage;
 let viewArticlePage;
+let editArticlePage;
 let article;
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
   createArticlePage = new CreateArticlePage(page);
   viewArticlePage = new ViewArticlePage(page);
+  editArticlePage = new EditArticlePage(page);
   article = generateNewArticleData();
+
   const user = generateNewUserData();
-
   await signUpUser(page, user);
-});
-
-test('Creat an article without tegs', async ({ page }) => {
   await homePage.clickNewArticleLink();
   await createNewArticle(page, article);
-
-  await viewArticlePage.assertArticleTitleIsVisible(article.title);
-  await viewArticlePage.assertArticleTextIsVisible(article.text);
 });
 
-test('Creat an article with tags', async ({ page }) => {
-  const article = generateNewArticleData(3);
+test('Remove an article title for the existing article', async () => {
+  await editArticlePage.open();
+  await editArticlePage.fillArticleTitle('');
+  await editArticlePage.clickUpdateArticleButton();
 
-  await homePage.clickNewArticleLink();
-  await createNewArticle(page, article);
-
-  await viewArticlePage.assertArticleTitleIsVisible(article.title);
-  await viewArticlePage.assertArticleTextIsVisible(article.text);
+  await viewArticlePage.assertErrorMessageContainsText(TITLE_CANNOT_BE_EMPTY);
 });
