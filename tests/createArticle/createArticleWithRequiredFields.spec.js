@@ -5,6 +5,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
+import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
 
 let homePage;
 let createArticlePage;
@@ -21,13 +22,19 @@ test.beforeEach(async ({ page }) => {
   await signUpUser(page, user);
 });
 
-test('Creat an article with required fields', async () => {
+test('Creat an article without tegs', async ({ page }) => {
   await homePage.clickNewArticleLink();
+  await createNewArticle(page, article);
 
-  await createArticlePage.fillTitleField(article.title);
-  await createArticlePage.fillDescriptionField(article.description);
-  await createArticlePage.fillTextField(article.text);
-  await createArticlePage.clickPublishArticleButton();
+  await viewArticlePage.assertArticleTitleIsVisible(article.title);
+  await viewArticlePage.assertArticleTextIsVisible(article.text);
+});
+
+test('Creat an article with tags', async ({ page }) => {
+  const article = generateNewArticleData(3);
+
+  await homePage.clickNewArticleLink();
+  await createNewArticle(page, article);
 
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
   await viewArticlePage.assertArticleTextIsVisible(article.text);
