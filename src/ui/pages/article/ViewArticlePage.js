@@ -7,7 +7,9 @@ export class ViewArticlePage {
     this.articleTitleHeader = page.getByRole('heading');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.errorMessage = page.locator('.error-messages');
-    this.editArticlePage = new EditArticlePage(page);
+    this.mainPage = page.locator('.navbar-brand', {hasText: 'conduit'});
+    this.globalFeed = page.locator('.nav-item', {hasText: 'Global Feed'});
+    this.descriptionOnGlobalFeed = page.locator('.preview-link p').first();
   }
 
   async assertArticleTitleIsVisible(title) {
@@ -24,8 +26,9 @@ export class ViewArticlePage {
 
   async assertArticleDescription(description) {
     await test.step('assert article description is updated', async () => {
-      await this.editArticlePage.goToEditArticlePage();
-      await expect(this.descriptionField).toHaveValue(description);
+      await this.mainPage.click();
+      await this.globalFeed.click();
+      await expect(this.descriptionOnGlobalFeed).toContainText(description);
     })
   }
 

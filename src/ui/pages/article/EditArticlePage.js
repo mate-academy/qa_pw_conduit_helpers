@@ -11,21 +11,15 @@ export class EditArticlePage {
     this.updateArticleButton = page.getByRole('button', {name: 'Update Article'});
   }
 
-  async goToEditArticlePage() {
+  async open() {
     await test.step('go to edit article page', async () => {
       await this.editPage.nth(1).click();
     });
   };
 
-  async editArticleTitleField(title) {
+  async fillArticleTitle(title) {
     await test.step('edit article title field', async () => {
       await this.titleField.fill(title);
-    });
-  };
-
-  async deleteArticleTitleValue() {
-    await test.step('delete article title value', async () => {
-      await this.titleField.fill('');
     });
   };
 
@@ -35,23 +29,11 @@ export class EditArticlePage {
     });
   };
 
-  async deleteArticleDescriptionValue() {
-    await test.step('delete article description', async () => {
-      await this.descriptionField.fill('');
-    });
-  };
-
   async editArticleTextField(text) {
     await test.step('edit article text field', async () => {
       await this.textField.fill(text);
     });
   };
-
-  async deleteArticleTextValue() {
-    await test.step('delete article text', async () => {
-      await this.textField.fill('');
-    })
-  }
 
   async editTagField(tag) {
     await test.step('edit tag field', async () => {

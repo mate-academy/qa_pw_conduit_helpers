@@ -15,6 +15,7 @@ let viewArticlePage;
 let editArticlePage;
 let article;
 let tagName;
+let newTitle = faker.lorem.words();
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
@@ -30,23 +31,11 @@ test.beforeEach(async ({ page }) => {
   await createNewArticle(page, article);
 });
 
-test('Add the tag for the existing article with tags', async () => {
-  await editArticlePage.goToEditArticlePage();
-
-  const newTag = faker.lorem.word();
-
-  await editArticlePage.editTagField(newTag);
+test('Edit the article title for the existing article', async () => {
+  await editArticlePage.open();
+  await editArticlePage.fillArticleTitle(newTitle);
   await editArticlePage.clickUpdateArticleButton();
   await viewArticlePage.waitForNavigationAndReload();
 
-  await viewArticlePage.assertArticleTagIsVisible(newTag);
-});
-
-test('Remove an article tag for the existing article with tag', async () => {
-  await editArticlePage.goToEditArticlePage();
-  await editArticlePage.deleteArticleTag(tagName);
-  await editArticlePage.clickUpdateArticleButton();
-  await viewArticlePage.waitForNavigationAndReload();
-
-  await viewArticlePage.assertArticleTagIsHidden(tagName);
+  await viewArticlePage.assertArticleTitleIsVisible(newTitle);
 });
