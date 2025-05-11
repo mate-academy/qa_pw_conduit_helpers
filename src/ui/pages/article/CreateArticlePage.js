@@ -30,6 +30,13 @@ export class CreateArticlePage {
     });
   }
 
+  async addTag(tag) {
+    await test.step('Add tag', async () => {
+      await this.tagField.fill(tag);
+      await this.tagField.press('Enter');
+    });
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
