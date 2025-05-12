@@ -9,6 +9,7 @@ export class CreateArticlePage {
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
+    this.tagField = page.getByPlaceholder('Enter tags');
     this.errorMessage = page.getByRole('list').nth(1);
   }
 
