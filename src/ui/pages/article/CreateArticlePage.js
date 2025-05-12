@@ -9,6 +9,7 @@ export class CreateArticlePage {
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
+    this.tagField = page.getByPlaceholder('Enter tags');
     this.errorMessage = page.getByRole('list').nth(1);
   }
 
@@ -27,6 +28,13 @@ export class CreateArticlePage {
   async fillTextField(text) {
     await test.step(`Fill the 'Text' field`, async () => {
       await this.textField.fill(text);
+    });
+  }
+
+  async addTag(tag) {
+    await test.step('Add tag', async () => {
+      await this.tagField.fill(tag);
+      await this.tagField.press('Enter');
     });
   }
 
