@@ -6,10 +6,17 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagField = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
     this.errorMessage = page.getByRole('list').nth(1);
+  }
+
+  async open() {
+    await test.step(`Open 'New Article' page`, async () => {
+      await this.page.goto('/editor');
+    });
   }
 
   async fillTitleField(title) {
@@ -30,9 +37,32 @@ export class CreateArticlePage {
     });
   }
 
+  async fillTagField(tag) {
+    await test.step(`Fill the 'Tag' field`, async () => {
+      await this.textField.fill(tag);
+      await this.page.keyboard.press('Enter');
+    });
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
+    });
+  }
+
+  async createNewArticle(article) {
+    await test.step(`Fill the 'Article' form`, async () => {
+      await this.fillTitleField(article.title);
+      await this.fillDescriptionField(article.description);
+      await this.fillTextField(article.text);
+
+      if (article.tags.length > 0) {
+        for (const tag of article.tags) {
+          await articlePage.fillTagsField(tag);
+        }
+      }
+
+      await this.clickPublishArticleButton();
     });
   }
 
