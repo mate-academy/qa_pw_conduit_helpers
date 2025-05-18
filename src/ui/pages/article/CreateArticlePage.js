@@ -13,12 +13,6 @@ export class CreateArticlePage {
     this.errorMessage = page.getByRole('list').nth(1);
   }
 
-  async open() {
-    await test.step(`Open 'New Article' page`, async () => {
-      await this.page.goto('/editor');
-    });
-  }
-
   async fillTitleField(title) {
     await test.step(`Fill the 'Title' field`, async () => {
       await this.titleField.fill(title);
@@ -39,7 +33,7 @@ export class CreateArticlePage {
 
   async fillTagField(tag) {
     await test.step(`Fill the 'Tag' field`, async () => {
-      await this.textField.fill(tag);
+      await this.tagField.fill(tag);
       await this.page.keyboard.press('Enter');
     });
   }
@@ -58,7 +52,8 @@ export class CreateArticlePage {
 
       if (article.tags.length > 0) {
         for (const tag of article.tags) {
-          await articlePage.fillTagsField(tag);
+          await this.fillTagField(tag);
+          await this.page.keyboard.press('Enter');
         }
       }
 

@@ -17,7 +17,7 @@ let createArticlePage;
 let viewArticlePage;
 let editArticlePage;
 let article;
-let newTitle = faker.lorem.words();
+let newText = faker.lorem.words();
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
@@ -35,12 +35,12 @@ test.beforeEach(async ({ page }) => {
   await createNewArticle(page, article);
 });
 
-test('Edit the article title for the existing article', async () => {
+test('Edit the article text for the existing article', async () => {
   await viewArticlePage.clickEditArticleButton();
 
-  await editArticlePage.editTitleField(newTitle);
+  await editArticlePage.editTextField(newText);
   await editArticlePage.clickUpdateArticleButton();
   await viewArticlePage.waitForNavigationAndReload();
 
-  await viewArticlePage.assertArticleTitleIsVisible(newTitle);
+  await viewArticlePage.assertArticleTextIsVisible(newText);
 });

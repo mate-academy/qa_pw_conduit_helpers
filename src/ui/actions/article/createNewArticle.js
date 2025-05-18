@@ -7,7 +7,7 @@ export async function createNewArticle(page, article) {
     const createArticlePage = new CreateArticlePage(page);
     const viewArticlePage = new ViewArticlePage(page);
 
-    await createArticlePage.createNewArticle();
+    await createArticlePage.createNewArticle(article);
 
     await viewArticlePage.assertArticleTitleIsVisible(article.title);
   });

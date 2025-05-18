@@ -7,6 +7,7 @@ export class EditArticlePage {
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
     this.tagField = page.getByPlaceholder('Enter tags');
+    this.articleTag = page.locator('.tag-list');
     this.updateArticleButton = page.getByRole('button', {
       name: 'Update Article',
     });
@@ -34,6 +35,16 @@ export class EditArticlePage {
   async editTagField(tag) {
     await test.step(`Edit the 'Tag' field`, async () => {
       await this.textField.fill(tag);
+    });
+  }
+
+  async removeArticleTag(tag) {
+    await test.step(`Remove the '${tag}' tag from the tag list`, async () => {
+      const tagElement = await this.articleTag.getByText(tag);
+      const removeButton = await tagElement.locator('.ion-close-round');
+      await removeButton.click();
+
+      await expect(this.articleTag).not.toContainText(tag);
     });
   }
 

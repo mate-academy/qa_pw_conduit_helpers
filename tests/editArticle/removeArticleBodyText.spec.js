@@ -1,5 +1,4 @@
 import { test } from '@playwright/test';
-import { faker } from '@faker-js/faker';
 
 import { HomePage } from '../../src/ui/pages/HomePage';
 import { CreateArticlePage } from '../../src/ui/pages/article/CreateArticlePage';
@@ -12,12 +11,13 @@ import { generateNewArticleData } from '../../src/common/testData/generateNewArt
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 
+import { BODY_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
+
 let homePage;
 let createArticlePage;
 let viewArticlePage;
 let editArticlePage;
 let article;
-let newTitle = faker.lorem.words();
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
@@ -35,12 +35,11 @@ test.beforeEach(async ({ page }) => {
   await createNewArticle(page, article);
 });
 
-test('Edit the article title for the existing article', async () => {
+test('Remove an article description for the existing article', async () => {
   await viewArticlePage.clickEditArticleButton();
 
-  await editArticlePage.editTitleField(newTitle);
+  await editArticlePage.editTextField('');
   await editArticlePage.clickUpdateArticleButton();
-  await viewArticlePage.waitForNavigationAndReload();
 
-  await viewArticlePage.assertArticleTitleIsVisible(newTitle);
+  await createArticlePage.assertErrorMessageContainsText(BODY_CANNOT_BE_EMPTY);
 });

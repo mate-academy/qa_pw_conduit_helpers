@@ -1,5 +1,4 @@
 import { test } from '@playwright/test';
-import { faker } from '@faker-js/faker';
 
 import { HomePage } from '../../src/ui/pages/HomePage';
 import { CreateArticlePage } from '../../src/ui/pages/article/CreateArticlePage';
@@ -17,7 +16,7 @@ let createArticlePage;
 let viewArticlePage;
 let editArticlePage;
 let article;
-let newTitle = faker.lorem.words();
+let removedTag;
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
@@ -25,7 +24,8 @@ test.beforeEach(async ({ page }) => {
   viewArticlePage = new ViewArticlePage(page);
   editArticlePage = new EditArticlePage(page);
 
-  article = generateNewArticleData();
+  article = generateNewArticleData(2);
+  removedTag = article.tags[0];
   const user = generateNewUserData();
 
   await signUpUser(page, user);
@@ -35,12 +35,12 @@ test.beforeEach(async ({ page }) => {
   await createNewArticle(page, article);
 });
 
-test('Edit the article title for the existing article', async () => {
+test('Remove an article tag for the existing article with tag', async () => {
   await viewArticlePage.clickEditArticleButton();
 
-  await editArticlePage.editTitleField(newTitle);
+  await editArticlePage.removeArticleTag(removedTag);
   await editArticlePage.clickUpdateArticleButton();
   await viewArticlePage.waitForNavigationAndReload();
 
-  await viewArticlePage.assertArticleTitleIsVisible(newTitle);
+  await viewArticlePage.assertArticleTagIsRemoved(removedTag);
 });
