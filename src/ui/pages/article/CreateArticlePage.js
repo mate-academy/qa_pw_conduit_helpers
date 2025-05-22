@@ -11,7 +11,7 @@ export class CreateArticlePage {
     });
     this.errorMessage = page.getByRole('list').nth(1);
     this.tagField = page.getByPlaceholder('Enter tags');
-    this.UpdateArticleButton = page.getByRole('button', {name: 'Update Article'});
+    this.updateArticleButton = page.getByRole('button', {name: 'Update Article'});
     this.deleteTagElement = page.locator('.ion-close-round');
     }
   
@@ -62,7 +62,7 @@ export class CreateArticlePage {
 
   async clickOnUpdateArticleButton() {
     await test.step('Click on Update article button', async() => {
-      await this.UpdateArticleButton.click();
+      await this.updateArticleButton.click();
     });
   }
 

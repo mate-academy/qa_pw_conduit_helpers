@@ -14,7 +14,7 @@ export const test = base.extend({
   homePage: async ({ page }, use) => {
     await use(new HomePage(page));
   },
-  signUP: async ({ page }, use) => {
+  signUp: async ({ page }, use) => {
     await use(new SignUpPage(page));
   },
 });
