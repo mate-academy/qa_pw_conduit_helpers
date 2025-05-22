@@ -11,5 +11,6 @@ export async function signUpUser(page, user) {
     await signUpPage.submitSignUpForm(user);
 
     await homePage.assertYourFeedTabIsVisible();
+    //await homePage.clickOnCreateNewArticleButton();
   });
 }
