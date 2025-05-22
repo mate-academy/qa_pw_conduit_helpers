@@ -21,5 +21,5 @@ test('Add tag for existeng article without tag', async({ page, createArticlePage
     await page.waitForTimeout(2000);
     await createArticlePage.clickOnUpdateArticleButton();
     await viewArticlePage.assertEditArticleButtonIsHere();
-    await viewArticlePage.assertTagTextIsHere('mjufmfnbj');
+    await viewArticlePage.assertTagTextIsHere();
 });

@@ -34,11 +34,11 @@ export class CreateArticlePage {
     });
   }
 
-  async clickPublishArticleButton() {
+  /*async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
     });
-  }
+  } */
 
   async fillTagField(text) {
     await test.step('Fill tag field', async() => {
@@ -63,13 +63,12 @@ export class CreateArticlePage {
   async clickOnUpdateArticleButton() {
     await test.step('Click on Update article button', async() => {
       await this.UpdateArticleButton.click();
-    })
+    });
   }
 
   async clickOnDeleteTagButton() {
     await test.step('Click on Delete Tag button', async() => {
       await this.deleteTagElement.click();
-  })
-
-}
+    });
+  }
 }
