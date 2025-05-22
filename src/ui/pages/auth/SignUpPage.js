@@ -54,4 +54,6 @@ export class SignUpPage {
       await expect(this.errorMessage).toContainText(messageText);
     });
   }
+
+  
 }
