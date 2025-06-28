@@ -4,7 +4,7 @@ import { CreateArticlePage } from '../../src/ui/pages/article/CreateArticlePage'
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
-import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
+import { ArticlePage } from '../../src/ui/pages/article/ArticlePage';
 
 let homePage;
 let createArticlePage;
@@ -14,7 +14,7 @@ let article;
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
   createArticlePage = new CreateArticlePage(page);
-  viewArticlePage = new ViewArticlePage(page);
+  viewArticlePage = new ArticlePage(page);
   article = generateNewArticleData();
   const user = generateNewUserData();
 
