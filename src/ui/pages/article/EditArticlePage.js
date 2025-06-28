@@ -7,7 +7,7 @@ export class EditArticlePage {
     this.articleDescriptionField = page.getByPlaceholder(
       `What's this article about?`,
     );
-    this.articleTextField = page.getByPlaceholder(
+    this.articleBodyField = page.getByPlaceholder(
       'Write your article (in markdown)',
     );
     this.articleTagField = page.getByPlaceholder('Enter tags');
@@ -25,13 +25,13 @@ export class EditArticlePage {
     });
   }
 
-  async editArticleText(newText) {
+  async editArticleBody(newText) {
     await test.step(
       `Edit article title in field with new text ${newText}`,
       async () =>
       {
-        await this.articleTextField.fill('');
-        await this.articleTextField.fill(newText);
+        await this.articleBodyField.fill('');
+        await this.articleBodyField.fill(newText);
       });
   }
 
@@ -75,7 +75,7 @@ export class EditArticlePage {
             await this.articleDescriptionField.fill('');
             break;
           case 'body':
-            await this.articleTextField.fill('');
+            await this.articleBodyField.fill('');
         }
       });
   }

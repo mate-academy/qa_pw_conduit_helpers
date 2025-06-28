@@ -52,13 +52,13 @@ test.describe('Edit Article tests', () => {
   });
 
   test('Edit the article text for the existing article', async () => {
-    const newArticleText = faker.lorem.sentence(2);
+    const newArticleBody = faker.lorem.sentence(2);
 
     await articlePage.clickEditArticle();
-    await editArticlePage.editArticleText(newArticleText);
+    await editArticlePage.editArticleBody(newArticleBody);
     await editArticlePage.clickUpdateArticleButton();
     await articlePage.refreshPageForUpdateArticlePage();
 
-    await articlePage.assertArticleTextIsVisible(newArticleText);
+    await articlePage.assertArticleBodyIsVisible(newArticleBody);
   });
 });

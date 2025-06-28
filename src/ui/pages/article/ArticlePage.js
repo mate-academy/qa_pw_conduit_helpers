@@ -29,7 +29,7 @@ export class ArticlePage {
     });
   }
 
-  async assertArticleTextIsVisible(text) {
+  async assertArticleBodyIsVisible(text) {
     await test.step(`Assert the article has correct text'`, async () => {
       await expect(this.page.getByText(text)).toBeVisible();
     });

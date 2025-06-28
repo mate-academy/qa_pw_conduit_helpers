@@ -25,7 +25,7 @@ export class CreateArticlePage {
     });
   }
 
-  async fillTextField(text) {
+  async fillBodyField(text) {
     await test.step(`Fill the 'Text' field`, async () => {
       await this.textField.fill(text);
     });

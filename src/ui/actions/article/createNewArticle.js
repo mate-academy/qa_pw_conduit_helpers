@@ -7,7 +7,7 @@ export async function createNewArticle(page, articleData, withTag = false) {
 
     await articlePage.fillTitleField(articleData.title);
     await articlePage.fillDescriptionField(articleData.description);
-    await articlePage.fillTextField(articleData.text);
+    await articlePage.fillBodyField(articleData.body);
 
     // eslint-disable-next-line playwright/no-conditional-in-test
     if (withTag) {
