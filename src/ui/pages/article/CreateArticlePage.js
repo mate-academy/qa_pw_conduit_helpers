@@ -6,9 +6,15 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagField = page.getByPlaceholder('Enter tags');
+    this.tagItem = page.locator('.tag-list .ion-close-round');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
+    this.updateArticleButton = page.getByRole('button', {
+      name: 'Update Article',
+    });
+
     this.errorMessage = page.getByRole('list').nth(1);
   }
 
@@ -30,9 +36,42 @@ export class CreateArticlePage {
     });
   }
 
+  async fillTagField(tags, clearTags) {
+    if (clearTags === 0) {
+      await test.step('Remove all tags', async () => {
+        while ((await this.tagItem.count()) > 0) {
+          await this.tagItem.first().click();
+        }
+      });
+    } else if (clearTags > 0) {
+      await test.step(`Remove ${clearTags} tag(s)`, async () => {});
+      for (let i = 0; i < clearTags; i++) {
+        if ((await this.tagItem.count()) === 0) break;
+        await this.tagItem.first().click();
+      }
+    }
+
+    if (tags && tags.length) {
+      await test.step(`Fill the 'Tag' field`, async () => {
+        for (const tag of tags) {
+          await this.tagField.fill(tag);
+          await this.page.keyboard.press('Enter');
+        }
+      });
+    } else {
+      await test.step(`Skip the 'Tag' field filling`, async () => {});
+    }
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
+    });
+  }
+
+  async clickUpdateArticleButton() {
+    await test.step(`Click the 'Update Article' button`, async () => {
+      await this.updateArticleButton.click();
     });
   }
 
