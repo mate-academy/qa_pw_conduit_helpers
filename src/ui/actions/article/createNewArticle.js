@@ -3,7 +3,7 @@ import { CreateArticlePage } from '../../pages/article/CreateArticlePage';
 import { test } from '@playwright/test';
 
 export async function createArticleWithoutTags(page, article) {
-  await test.step(`Create article with tags ${article}`, async () => {
+  await test.step(`Create article without tags ${article}`, async () => {
     const homePage = new HomePage(page);
     const articlePage = new CreateArticlePage(page);
 
