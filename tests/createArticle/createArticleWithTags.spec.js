@@ -17,7 +17,7 @@ test.beforeEach(async ({page}) => {
   await createArticleWithTag(page, article);
 })
 
-test(`Create article with tags`, async () => {
+test(`Create article with tag`, async () => {
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
   await viewArticlePage.assertArticleTextIsVisible(article.text);
   await viewArticlePage.assertArticleTextIsVisible(article.tags);
