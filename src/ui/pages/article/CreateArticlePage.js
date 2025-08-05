@@ -6,9 +6,15 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.articleTagField = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
+    this.editArticleButton = page
+      .getByRole('link', {
+        name: ' Edit Article',
+      })
+      .nth(1);
     this.errorMessage = page.getByRole('list').nth(1);
   }
 
@@ -27,6 +33,22 @@ export class CreateArticlePage {
   async fillTextField(text) {
     await test.step(`Fill the 'Text' field`, async () => {
       await this.textField.fill(text);
+    });
+  }
+
+  async fillArticleTagField(tag) {
+    let tagsToProcess = [];
+    if (Array.isArray(tag)) {
+      tagsToProcess = tag;
+    } else {
+      tagsToProcess = [tag];
+    }
+
+    await test.step(`Fill article tag field`, async () => {
+      for (const item of tagsToProcess) {
+        await this.articleTagField.fill(item);
+        await this.page.keyboard.press('Enter');
+      }
     });
   }
 
