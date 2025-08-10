@@ -6,10 +6,12 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagField = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
-    this.errorMessage = page.getByRole('list').nth(1);
+    this.updateArticleButton = page.getByRole('button', { name: 'Update Article' });
+    this.errorMessage = page.locator('.error-messages');
   }
 
   async fillTitleField(title) {
@@ -30,9 +32,30 @@ export class CreateArticlePage {
     });
   }
 
+  async fillTagField(tag) {
+    await test.step(`Fill the 'Tag' field`, async () => {
+      await this.tagField.fill(tag);
+      await this.tagField.press('Enter'); 
+    });
+  }
+
+  async removeTag(tag) {
+    const thisTag = this.page.locator('.tag-pill', { hasText: tag }).locator('.ion-close-round');
+
+    await test.step(`Remove ${tag} tag`, async () => {
+      await thisTag.click();
+    });
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
+    });
+  }
+
+  async clickUpdateArticleButton() {
+    await test.step(`Click the 'Update Article' button`, async () => {
+      await this.updateArticleButton.click();
     });
   }
 

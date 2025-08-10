@@ -5,11 +5,18 @@ export class HomePage {
     this.page = page;
     this.yourFeedTab = page.getByText('Your Feed');
     this.newArticleLink = page.getByRole('link', { name: 'New Article' });
+    this.profileLink = page.locator('.nav-link[href*="/profile/"]');
   }
 
   async clickNewArticleLink() {
     await test.step(`Click the 'New Article' link`, async () => {
       await this.newArticleLink.click();
+    });
+  }
+
+  async clickMyProfileLink() {
+    await test.step(`Click the 'My Profile' link`, async () => {
+      await this.profileLink.click();
     });
   }
 
