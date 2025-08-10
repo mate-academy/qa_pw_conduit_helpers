@@ -40,7 +40,7 @@ export class CreateArticlePage {
   }
 
   async removeTag(tag) {
-    const thisTag = this.page.locator('span').filter({ hasText: tag }).locator('i');
+    const thisTag = this.page.locator('.tag-pill', { hasText: tag }).locator('.ion-close-round');
 
     await test.step(`Remove ${tag} tag`, async () => {
       await thisTag.click();

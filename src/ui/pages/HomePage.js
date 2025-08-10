@@ -5,7 +5,7 @@ export class HomePage {
     this.page = page;
     this.yourFeedTab = page.getByText('Your Feed');
     this.newArticleLink = page.getByRole('link', { name: 'New Article' });
-    this.profileLink = page.getByRole('link', { name: 'your profile image' });
+    this.profileLink = page.locator('.nav-link[href*="/profile/"]');
   }
 
   async clickNewArticleLink() {

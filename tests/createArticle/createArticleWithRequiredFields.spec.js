@@ -7,8 +7,6 @@ import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 
-let homePage;
-let createArticlePage;
 let viewArticlePage;
 let article;
 

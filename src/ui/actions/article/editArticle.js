@@ -17,7 +17,6 @@ export async function editArticle(page, article, updatedArticle, deleteTags = fa
     await profilePage.clickArticleLink(article.title);
     await viewArticlePage.clickEditArticleButton();
 
-    // Перевірки тепер через in, щоб можна було очищати поля
     if ('title' in updatedArticle) {
       await createArticlePage.fillTitleField(updatedArticle.title || '');
     }
@@ -41,21 +40,5 @@ export async function editArticle(page, article, updatedArticle, deleteTags = fa
     }
 
     await createArticlePage.clickUpdateArticleButton();
-
-    const isValidUpdate =
-      (!('title' in updatedArticle) || updatedArticle.title.trim() !== '') &&
-      (!('description' in updatedArticle) || updatedArticle.description.trim() !== '') &&
-      (!('text' in updatedArticle) || updatedArticle.text.trim() !== '');
-
-    if (isValidUpdate) {
-      const isAllChanged =
-        'title' in updatedArticle && updatedArticle.title !== article.title &&
-        'description' in updatedArticle && updatedArticle.description !== article.description &&
-        'text' in updatedArticle && updatedArticle.text !== article.text;
-
-      if (isAllChanged) {
-        await viewArticlePage.refreshAfterUpdate();
-      }
-    }
   });
 }

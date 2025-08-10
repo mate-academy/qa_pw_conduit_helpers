@@ -9,13 +9,13 @@ export async function createNewArticle(page, article) {
 
     await homePage.clickNewArticleLink();
 
-    if (article.title) {
+    if ('title' in article) {
       await createArticlePage.fillTitleField(article.title);
     }
-    if (article.description) {
+    if ('description' in article) {
       await createArticlePage.fillDescriptionField(article.description);
     }
-    if (article.text) {
+    if ('text' in article) {
       await createArticlePage.fillTextField(article.text);
     }
     if (article.tags && article.tags.length > 0) {
