@@ -13,8 +13,6 @@ let viewArticlePage;
 let article;
 
 test.beforeEach(async ({ page }) => {
-  homePage = new HomePage(page);
-  createArticlePage = new CreateArticlePage(page);
   viewArticlePage = new ViewArticlePage(page);
   article = generateNewArticleData(3);
   const user = generateNewUserData();
@@ -22,9 +20,14 @@ test.beforeEach(async ({ page }) => {
   await signUpUser(page, user);
 });
 
-test('Creat an article with required fields', async ({ page }) => {
+test('Create an article with required fields', async ({ page }) => {
   await createNewArticle(page, article);
 
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
   await viewArticlePage.assertArticleTextIsVisible(article.text);
+  if (article.tags && article.tags.length > 0) {
+    for (const tag of article.tags) {
+      await viewArticlePage.assertArticleTagIsVisible(tag);
+    }
+  }
 });

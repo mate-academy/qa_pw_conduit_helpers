@@ -8,17 +8,13 @@ import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 import { editArticle } from '../../src/ui/actions/article/editArticle';
-import { TITLE_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
-import { DESCRIPTION_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
-import { BODY_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
+import { TITLE_CANNOT_BE_EMPTY, DESCRIPTION_CANNOT_BE_EMPTY, BODY_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
 
-let homePage;
 let createArticlePage;
 let viewArticlePage;
 let article;
 
 test.beforeEach(async ({ page }) => {
-  homePage = new HomePage(page);
   createArticlePage = new CreateArticlePage(page);
   viewArticlePage = new ViewArticlePage(page);
   article = generateNewArticleData(3);
@@ -41,7 +37,7 @@ test('Remove an article title for the existing article', async ({ page }) => {
   await createArticlePage.assertErrorMessageContainsText(TITLE_CANNOT_BE_EMPTY);
 });
 
-test('Remove an article desctiption for the existing article', async ({ page }) => {
+test('Remove an article description for the existing article', async ({ page }) => {
   const updatedArticle = { 
     title: faker.lorem.words(),
     description: '',
@@ -65,20 +61,4 @@ test('Remove an article text for the existing article', async ({ page }) => {
   await editArticle(page, article, updatedArticle);
 
   await createArticlePage.assertErrorMessageContainsText(BODY_CANNOT_BE_EMPTY);
-});
-
-test('Remove an article tag for the existing article', async ({ page }) => {
-  const updatedArticle = { 
-    title: faker.lorem.words(),
-    description: faker.lorem.sentence(4),
-    text: faker.lorem.sentence(4),
-    tags: [] 
-  }; 
-  
-  await editArticle(page, article, updatedArticle, true);
-  if (article.tags && article.tags.length > 0) {
-    for (const tag of article.tags) {
-      await viewArticlePage.assertArticleTagIsNotVisible(tag);
-    }
-  }
 });

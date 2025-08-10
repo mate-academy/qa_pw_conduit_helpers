@@ -4,7 +4,7 @@ export class ViewArticlePage {
   constructor(page) {
     this.page = page;
     this.articleTitleHeader = page.getByRole('heading');
-    this.editArticleButton = page.getByRole('link', { name: ' Edit Article' }).first();
+    this.editArticleButton = page.locator('a.btn.btn-outline-secondary.btn-sm:has-text("Edit Article")').first();
   }
 
   async clickEditArticleButton() {

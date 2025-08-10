@@ -13,7 +13,7 @@ export class ProfilePage {
   }
 
   async clickArticleLink(articleTitle) {
-    const articleLink = this.page.locator(`text=${articleTitle.substring(0, 10)}`);
+    const articleLink = this.page.locator(`text=${articleTitle}`);
 
     await test.step(`Click the '${articleTitle}' link`, async () => {
       await articleLink.click();

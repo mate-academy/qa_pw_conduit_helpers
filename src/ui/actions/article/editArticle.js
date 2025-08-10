@@ -17,20 +17,24 @@ export async function editArticle(page, article, updatedArticle, deleteTags = fa
     await profilePage.clickArticleLink(article.title);
     await viewArticlePage.clickEditArticleButton();
 
-    if (article.title) {
-      await createArticlePage.fillTitleField(updatedArticle.title);
+    // Перевірки тепер через in, щоб можна було очищати поля
+    if ('title' in updatedArticle) {
+      await createArticlePage.fillTitleField(updatedArticle.title || '');
     }
-    if (article.description) {
-      await createArticlePage.fillDescriptionField(updatedArticle.description);
+    if ('description' in updatedArticle) {
+      await createArticlePage.fillDescriptionField(updatedArticle.description || '');
     }
-    if (article.text) {
-      await createArticlePage.fillTextField(updatedArticle.text);
+    if ('text' in updatedArticle) {
+      await createArticlePage.fillTextField(updatedArticle.text || '');
     }
-    if (deleteTags && article.tags && article.tags.length > 0) {
+
+    if (deleteTags && article.tags?.length > 0) {
       for (const tag of article.tags) {
         await createArticlePage.removeTag(tag);
       }
-    } else if (updatedArticle.tags && updatedArticle.tags.length > 0) {
+    }
+
+    if ('tags' in updatedArticle && updatedArticle.tags?.length > 0) {
       for (const tag of updatedArticle.tags) {
         await createArticlePage.fillTagField(tag);
       }
@@ -38,13 +42,20 @@ export async function editArticle(page, article, updatedArticle, deleteTags = fa
 
     await createArticlePage.clickUpdateArticleButton();
 
-    const isAllChanged =
-      updatedArticle.title && updatedArticle.title !== article.title &&
-      updatedArticle.description && updatedArticle.description !== article.description &&
-      updatedArticle.text && updatedArticle.text !== article.text;
+    const isValidUpdate =
+      (!('title' in updatedArticle) || updatedArticle.title.trim() !== '') &&
+      (!('description' in updatedArticle) || updatedArticle.description.trim() !== '') &&
+      (!('text' in updatedArticle) || updatedArticle.text.trim() !== '');
 
-    if (isAllChanged) {
-      await viewArticlePage.refreshAfterUpdate();
+    if (isValidUpdate) {
+      const isAllChanged =
+        'title' in updatedArticle && updatedArticle.title !== article.title &&
+        'description' in updatedArticle && updatedArticle.description !== article.description &&
+        'text' in updatedArticle && updatedArticle.text !== article.text;
+
+      if (isAllChanged) {
+        await viewArticlePage.refreshAfterUpdate();
+      }
     }
   });
 }
