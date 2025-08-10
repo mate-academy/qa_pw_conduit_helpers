@@ -5,6 +5,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
+import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 
 let homePage;
 let createArticlePage;
@@ -15,19 +16,14 @@ test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
   createArticlePage = new CreateArticlePage(page);
   viewArticlePage = new ViewArticlePage(page);
-  article = generateNewArticleData();
+  article = generateNewArticleData(3);
   const user = generateNewUserData();
 
   await signUpUser(page, user);
 });
 
-test('Creat an article with required fields', async () => {
-  await homePage.clickNewArticleLink();
-
-  await createArticlePage.fillTitleField(article.title);
-  await createArticlePage.fillDescriptionField(article.description);
-  await createArticlePage.fillTextField(article.text);
-  await createArticlePage.clickPublishArticleButton();
+test('Creat an article with required fields', async ({ page }) => {
+  await createNewArticle(page, article);
 
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
   await viewArticlePage.assertArticleTextIsVisible(article.text);
