@@ -34,6 +34,9 @@ export class EditArticlePage {
   }
 
   async fillTagsField(tags) {
+    if (!Array.isArray(tags) || tags.length === 0) {
+      return;
+    }
     await test.step(`Fill the 'Tags' field`, async () => {
       for (const tag of tags) {
         await this.tagsField.fill(tag);

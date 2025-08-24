@@ -7,7 +7,6 @@ export class ViewArticlePage {
     this.editArticleButton = page
       .getByRole('link', { name: 'Edit Article' })
       .nth(1);
-    //this.articleTagsList = page.locator('.tag-list');
   }
 
   async assertArticleTitleIsVisible(title) {
@@ -21,7 +20,7 @@ export class ViewArticlePage {
       await expect(this.page.getByText(text)).toBeVisible();
     });
   }
-  async assertArtistleTagsAreVisible(tags) {
+  async assertArticleTagsAreVisible(tags) {
     await test.step(`Assert the article has correct tags'`, async () => {
       for (const tag of tags) {
         await expect(this.page.getByText(tag)).toBeVisible();
@@ -29,7 +28,7 @@ export class ViewArticlePage {
     });
   }
 
-  async assertArticleTagsIsNotVisible(tag) {
+  async assertDeletedArticleTags(tag) {
     await test.step(`Assert the article has no tags'`, async () => {
       await expect(this.page.getByText(tag)).toBeHidden();
     });

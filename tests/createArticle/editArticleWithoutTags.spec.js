@@ -84,7 +84,7 @@ test.describe('Edit an article without tegs', () => {
 
     await page.waitForURL(`**/article/**`);
     await page.reload();
-    await viewArticlePage.assertArtistleTagsAreVisible(newArticle.tags);
+    await viewArticlePage.assertArticleTagsAreVisible(newArticle.tags);
   });
 
   test('Remove an article title for the existing article', async () => {
