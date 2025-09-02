@@ -10,6 +10,7 @@ export class CreateArticlePage {
       name: 'Publish Article',
     });
     this.errorMessage = page.getByRole('list').nth(1);
+    this.articleTag = page.getByPlaceholder('Enter tags');
   }
 
   async fillTitleField(title) {
@@ -39,6 +40,25 @@ export class CreateArticlePage {
   async assertErrorMessageContainsText(messageText) {
     await test.step(`Assert the '${messageText}' error is shown`, async () => {
       await expect(this.errorMessage).toContainText(messageText);
+    });
+  }
+
+  async addArticleTag(tag) {
+    await test.step(`Add an article tag: ${tag}`, async () => {
+      await this.articleTag.fill(tag);
+      await this.page.keyboard.press('Enter');
+    });
+  }
+
+  async fillArticleFields(article) {
+    await test.step('Filling the article fields', async () => {
+      await this.fillTitleField(article.title);
+      await this.fillDescriptionField(article.description);
+      await this.fillTextField(article.text);
+      for (const tag of article.tags) {
+        await this.addArticleTag(tag);
+      }
+      await this.clickPublishArticleButton();
     });
   }
 }
