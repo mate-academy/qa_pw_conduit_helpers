@@ -1,0 +1,43 @@
+import { test } from '@playwright/test';
+import { HomePage } from '../../pages/HomePage';
+import { CreateArticlePage } from '../../pages/article/CreateArticlePage';
+import { ViewArticlePage } from '../../pages/article/ViewArticlePage';
+
+export async function createNewArticleWithTag(page, article) {
+    const createArticlePage = new CreateArticlePage(page);
+    const homePage = new HomePage(page);
+    const viewArticlePage = new ViewArticlePage(page);
+
+    await test.step('Create new article with tag', async () => {
+
+        await homePage.clickNewArticleLink();
+
+        await createArticlePage.fillTitleField(article.title);
+        await createArticlePage.fillDescriptionField(article.description);
+        await createArticlePage.fillTextField(article.text);
+        await createArticlePage.fillTagField(article.tag);
+        await createArticlePage.clickPublishArticleButton();
+
+        await viewArticlePage.assertArticleTitleIsVisible(article.title);
+        await viewArticlePage.assertArticleTextIsVisible(article.text);
+    });
+}
+
+export async function createNewArticleWithoutTag(page, article) {
+    const createArticlePage = new CreateArticlePage(page);
+    const homePage = new HomePage(page);
+    const viewArticlePage = new ViewArticlePage(page);
+
+    await test.step('Create new article without tag', async () => {
+
+        await homePage.clickNewArticleLink();
+
+        await createArticlePage.fillTitleField(article.title);
+        await createArticlePage.fillDescriptionField(article.description);
+        await createArticlePage.fillTextField(article.text);
+        await createArticlePage.clickPublishArticleButton();
+
+        await viewArticlePage.assertArticleTitleIsVisible(article.title);
+        await viewArticlePage.assertArticleTextIsVisible(article.text);
+    });
+}

@@ -5,6 +5,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
+import { createNewArticleWithoutTag, createNewArticleWithTag } from '../../src/ui/actions/article/createNewArticle';
 
 let homePage;
 let createArticlePage;
@@ -22,13 +23,6 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('Creat an article with required fields', async () => {
-  await homePage.clickNewArticleLink();
-
-  await createArticlePage.fillTitleField(article.title);
-  await createArticlePage.fillDescriptionField(article.description);
-  await createArticlePage.fillTextField(article.text);
-  await createArticlePage.clickPublishArticleButton();
-
-  await viewArticlePage.assertArticleTitleIsVisible(article.title);
-  await viewArticlePage.assertArticleTextIsVisible(article.text);
+  await createNewArticleWithTag(homePage.page, article);
+  await createNewArticleWithoutTag(homePage.page, article);
 });
