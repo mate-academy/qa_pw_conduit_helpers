@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-export function generateNewArticleData(tagNumber = 0) {
+export function generateNewArticleData(tagNumber) {
   const tags = Array.from({ length: tagNumber }, () => faker.lorem.word());
 
   const article = {
