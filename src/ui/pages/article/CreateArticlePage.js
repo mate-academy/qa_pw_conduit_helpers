@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { generateNewArticleData } from '../../../common/testData/generateNewArticleData';
 
 export class CreateArticlePage {
   constructor(page) {
@@ -6,6 +7,9 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagField = page.getByPlaceholder('Enter tags');
+    this.tagBuble = page.locator('.tag-default');
+    this.tagBubleDeleteIcon = page.locator('form i');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
@@ -30,6 +34,13 @@ export class CreateArticlePage {
     });
   }
 
+  async fillTagField(tag) {
+    await test.step(`Fill the 'Tag' field`, async () => {
+      await this.tagField.fill(tag);
+      await this.tagField.press('Enter');
+    });
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
@@ -39,6 +50,30 @@ export class CreateArticlePage {
   async assertErrorMessageContainsText(messageText) {
     await test.step(`Assert the '${messageText}' error is shown`, async () => {
       await expect(this.errorMessage).toContainText(messageText);
+    });
+  }
+
+  async clearTitleField() {
+    await test.step(`Clear the 'Title' field`, async () => {
+      await this.titleField.fill('');
+    });
+  }
+
+  async clearDescriptionField() {
+    await test.step(`Clear the 'Description' field`, async () => {
+      await this.descriptionField.fill('');
+    });
+  }
+
+  async clearTextField() {
+    await test.step(`Clear the 'Text' field`, async () => {
+      await this.textField.fill('');
+    });
+  }
+
+  async deleteTagBuble() {
+    await test.step(`Delete the 'Tag' buble`, async () => {
+      await this.tagBubleDeleteIcon.nth(0).click();
     });
   }
 }
