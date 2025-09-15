@@ -10,6 +10,7 @@ export class CreateArticlePage {
       name: 'Publish Article',
     });
     this.errorMessage = page.getByRole('list').nth(1);
+    this.tagInput = page.getByPlaceholder('Enter tags');
   }
 
   async fillTitleField(title) {
@@ -33,6 +34,13 @@ export class CreateArticlePage {
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
+    });
+  }
+
+  async addTag(tag) {
+    await test.step(`Add tag '${tag}'`, async () => {
+      await this.tagInput.fill(tag);
+      await this.tagInput.press('Enter');
     });
   }
 
