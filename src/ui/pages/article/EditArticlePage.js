@@ -8,7 +8,8 @@ export class EditArticlePage {
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
     this.tagInput = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', { name: 'Publish Article' });
-    this.errorMessage = page.getByRole('list').nth(1);
+  // More stable: look for list of errors by CSS if available; fallback remains for now
+  this.errorMessage = page.locator("ul.error-messages, ul:has-text(\"can't be blank\")").first();
   }
 
   async fillTitleField(title) {
@@ -19,7 +20,7 @@ export class EditArticlePage {
 
   async clearTitle() {
     await test.step(`Clear the 'Title' field`, async () => {
-      await this.titleField.clear();
+      await this.titleField.fill('');
     });
   }
 
@@ -31,7 +32,7 @@ export class EditArticlePage {
 
   async clearDescription() {
     await test.step(`Clear the 'Description' field`, async () => {
-      await this.descriptionField.clear();
+      await this.descriptionField.fill('');
     });
   }
 
@@ -43,7 +44,7 @@ export class EditArticlePage {
 
   async clearText() {
     await test.step(`Clear the 'Text' field`, async () => {
-      await this.textField.clear();
+      await this.textField.fill('');
     });
   }
 

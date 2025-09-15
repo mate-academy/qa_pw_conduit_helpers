@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
@@ -27,7 +27,7 @@ test('Create an article with tags', async ({ page }) => {
   // Assert tags visible (best-effort; adjust locator if real markup differs)
   for (const tag of article.tags) {
     await test.step(`Assert tag ${tag} is visible`, async () => {
-      await page.getByText(tag).first().isVisible();
+      await expect(page.getByText(tag).first()).toBeVisible();
     });
   }
 });

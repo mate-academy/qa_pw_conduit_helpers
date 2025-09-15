@@ -13,6 +13,6 @@ test.beforeEach(async ({ page }) => {
   await signUpUser(page, user);
 });
 
-test('Creat an article with required fields', async () => {
-  await createNewArticle(test.info().page, article);
+test('Create an article with required fields', async ({ page }) => {
+  await createNewArticle(page, article);
 });
