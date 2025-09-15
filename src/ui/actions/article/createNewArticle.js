@@ -3,7 +3,7 @@ import { HomePage } from '../../pages/HomePage';
 import { CreateArticlePage } from '../../pages/article/CreateArticlePage';
 import { ViewArticlePage } from '../../pages/article/ViewArticlePage';
 
-export async function createNewArticleWithTag(page, article) {
+export async function createNewArticle(page, article) {
     const createArticlePage = new CreateArticlePage(page);
     const homePage = new HomePage(page);
     const viewArticlePage = new ViewArticlePage(page);
@@ -15,7 +15,15 @@ export async function createNewArticleWithTag(page, article) {
         await createArticlePage.fillTitleField(article.title);
         await createArticlePage.fillDescriptionField(article.description);
         await createArticlePage.fillTextField(article.text);
-        await createArticlePage.fillTagField(article.tag);
+
+       if (Array.isArray(article.tags) && article.tags.length > 0) {
+            for (const tag of article.tags) {
+                if (tag) {
+                    await createArticlePage.fillTagField(tag);
+                }
+            }
+        }
+
         await createArticlePage.clickPublishArticleButton();
 
         await viewArticlePage.assertArticleTitleIsVisible(article.title);
@@ -23,21 +31,21 @@ export async function createNewArticleWithTag(page, article) {
     });
 }
 
-export async function createNewArticleWithoutTag(page, article) {
-    const createArticlePage = new CreateArticlePage(page);
-    const homePage = new HomePage(page);
-    const viewArticlePage = new ViewArticlePage(page);
+// export async function createNewArticleWithoutTag(page, article) {
+//     const createArticlePage = new CreateArticlePage(page);
+//     const homePage = new HomePage(page);
+//     const viewArticlePage = new ViewArticlePage(page);
 
-    await test.step('Create new article without tag', async () => {
+//     await test.step('Create new article without tag', async () => {
 
-        await homePage.clickNewArticleLink();
+//         await homePage.clickNewArticleLink();
 
-        await createArticlePage.fillTitleField(article.title);
-        await createArticlePage.fillDescriptionField(article.description);
-        await createArticlePage.fillTextField(article.text);
-        await createArticlePage.clickPublishArticleButton();
+//         await createArticlePage.fillTitleField(article.title);
+//         await createArticlePage.fillDescriptionField(article.description);
+//         await createArticlePage.fillTextField(article.text);
+//         await createArticlePage.clickPublishArticleButton();
 
-        await viewArticlePage.assertArticleTitleIsVisible(article.title);
-        await viewArticlePage.assertArticleTextIsVisible(article.text);
-    });
-}
+//         await viewArticlePage.assertArticleTitleIsVisible(article.title);
+//         await viewArticlePage.assertArticleTextIsVisible(article.text);
+//     });
+// }

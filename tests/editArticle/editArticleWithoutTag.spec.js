@@ -6,8 +6,8 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
-import { createNewArticleWithoutTag } from '../../src/ui/actions/article/createNewArticle';
-import { editArticleWithoutTag } from '../../src/ui/actions/article/editArticle';
+import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
+import { removeTagInArticle } from '../../src/ui/actions/article/editArticle';
 
 let homePage;
 let createArticlePage;
@@ -20,13 +20,13 @@ test.beforeEach(async ({ page }) => {
   createArticlePage = new CreateArticlePage(page);
   editArticlePage = new EditArticlePage(page);
   viewArticlePage = new ViewArticlePage(page);
-  article = generateNewArticleData();
+  article = generateNewArticleData(1);
   const user = generateNewUserData();
 
   await signUpUser(page, user);
-  await createNewArticleWithoutTag(homePage.page, article);
+  await createNewArticle(homePage.page, article);
 });
 
-test('Edit an article with tag', async () => {
-    await editArticleWithoutTag(homePage.page, article);
+test('Edit an article without tag', async () => {
+    await removeTagInArticle(homePage.page, article);
 });

@@ -24,4 +24,16 @@ export class ViewArticlePage {
       await this.editArticleButton.click();
     });
   }
+
+  async assertTagBubleIsVisible(tag) {
+    await test.step(`Assert the '${tag}' tag buble is visible`, async () => {
+      await expect(this.page.getByText(tag)).toBeVisible();
+    });
+  }
+
+  async assertTagBubleIsNotVisible(tag) {
+    await test.step(`Assert the '${tag}' tag buble is not visible`, async () => {
+      await expect(this.page.getByText(tag)).toBeHidden();
+    });
+  }
 }

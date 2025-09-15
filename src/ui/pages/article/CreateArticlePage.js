@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { generateNewArticleData } from '../../../common/testData/generateNewArticleData';
 
 export class CreateArticlePage {
   constructor(page) {
@@ -8,7 +9,7 @@ export class CreateArticlePage {
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
     this.tagField = page.getByPlaceholder('Enter tags');
     this.tagBuble = page.locator('.tag-default');
-    this.tagBubleDeleteIcon = this.tagBuble.locator('.ion-close-round');
+    this.tagBubleDeleteIcon = page.locator('form i');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
@@ -33,9 +34,9 @@ export class CreateArticlePage {
     });
   }
 
-  async fillTagField() {
+  async fillTagField(tag) {
     await test.step(`Fill the 'Tag' field`, async () => {
-      await this.tagField.fill('tag1');
+      await this.tagField.fill(tag);
       await this.tagField.press('Enter');
     });
   }
