@@ -4,11 +4,25 @@ export class ViewArticlePage {
   constructor(page) {
     this.page = page;
     this.articleTitleHeader = page.getByRole('heading');
+    this.editArticleButton = page.getByRole('link', { name: ' Edit Article' }).first();
+  }
+
+  async clickEditArticle() {
+    await test.step(`Click the 'Edit Article' button`, async () => {
+      await this.editArticleButton.click();
+      await this.page.waitForURL(/\/editor\/.+/);
+    });
   }
 
   async assertArticleTitleIsVisible(title) {
     await test.step(`Assert the article has correct title'`, async () => {
       await expect(this.articleTitleHeader).toContainText(title);
+    });
+  }
+
+  async assertDescriptionToHaveText(description) {
+    await test.step(`Assert the article description is shown`, async () => {
+      await expect(this.articleDescription).toHaveText(description);
     });
   }
 
