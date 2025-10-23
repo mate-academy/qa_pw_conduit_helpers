@@ -23,7 +23,7 @@ test.beforeEach(async ({ page }) => {
   newArticle = generateNewArticleData(2);
 
   await signUpUser(page, user);
-  homePage.clickNewArticleLink();
+  await homePage.clickNewArticleLink();
   await createNewArticle(page, article);
 });
 test('Add the tag for the existing article without tags', async () => {

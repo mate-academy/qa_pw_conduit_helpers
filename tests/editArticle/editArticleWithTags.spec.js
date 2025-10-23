@@ -67,7 +67,8 @@ test('Add the tag for the existing article with tags', async () => {
   await createArticlePage.clickUpdateArticleButton();
 
   await viewArticlePage.clickEditArticle();
-  await createArticlePage.assertTagsListContainsTags(newArticle.tags);
+  const allExpectedTags = [...article.tags, ...newArticle.tags];
+  await createArticlePage.assertTagsListContainsTags(allExpectedTags);
 });
 
 test('Remove an article tag for the existing article with tag', async () => {

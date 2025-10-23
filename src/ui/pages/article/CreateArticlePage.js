@@ -8,7 +8,7 @@ export class CreateArticlePage {
     this.textField = this.page.getByPlaceholder('Write your article (in markdown)');
     this.tagsField = this.page.getByPlaceholder('Enter tags');
     this.tagList = this.page.locator('.tag-list > .tag-pill');
-    this.firstTagDeleteButton = this.page.locator('.tag-list > .tag-pill > .ion-close-round').nth(1);
+    this.firstTagDeleteButton = this.page.locator('.tag-list > .tag-pill > .ion-close-round').first();
     this.publishArticleButton = this.page.getByRole('button', {
       name: 'Publish Article',
     });
