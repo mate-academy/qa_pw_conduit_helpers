@@ -9,7 +9,7 @@ import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 let homePage;
 let createArticlePage;
 let viewArticlePage;
-let article;
+let article; 
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
