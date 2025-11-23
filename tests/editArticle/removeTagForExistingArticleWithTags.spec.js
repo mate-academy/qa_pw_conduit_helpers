@@ -1,0 +1,40 @@
+import { test } from '@playwright/test';
+import { CreateArticlePage } from '../../src/ui/pages/article/CreateArticlePage';
+import { HomePage } from '../../src/ui/pages/HomePage';
+import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
+import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
+import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
+import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
+import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
+
+let homePage;
+let createArticlePage;
+let viewArticlePage;
+let article;
+
+test.beforeEach(async ({ page }) => {
+  homePage = new HomePage(page);
+  createArticlePage = new CreateArticlePage(page);
+  viewArticlePage = new ViewArticlePage(page);
+  article = generateNewArticleData(2);
+  const user = generateNewUserData();
+
+  await signUpUser(page, user);
+  await createNewArticle(page, article);
+});
+
+test('Remove an article tag for the existing article with tag', async ({
+  page,
+}) => {
+  await viewArticlePage.clickEditArticleLink();
+  await createArticlePage.assertArticleTitleVisible();
+  await page.reload();
+  for (const tag of article.tags) {
+    await createArticlePage.removeTag(tag);
+  }
+  await createArticlePage.clickUpdateArticleButton();
+  await viewArticlePage.assertArticleTitleIsVisible(article.title);
+  for (const tag of article.tags) {
+    await viewArticlePage.assertArticleTagIsHidden(tag);
+  }
+});
