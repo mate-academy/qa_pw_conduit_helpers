@@ -4,7 +4,7 @@ import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
-import createNewArticle from '../../src/ui/article/createNewArticle';
+import createNewArticle from '../../src/ui/actions/article/createNewArticle';
 
 test('creates an article with required fields', async ({ page }) => {
   const homePage = new HomePage(page);

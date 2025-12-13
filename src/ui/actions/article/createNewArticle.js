@@ -1,5 +1,5 @@
-import { CreateArticlePage } from '../pages/article/CreateArticlePage';
-import { ViewArticlePage } from '../pages/article/ViewArticlePage';
+import { CreateArticlePage } from '../../pages/article/CreateArticlePage';
+import { ViewArticlePage } from '../../pages/article/ViewArticlePage';
 import { test } from '@playwright/test';
 
 export default async function createNewArticle(page, article) {
