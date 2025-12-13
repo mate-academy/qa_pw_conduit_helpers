@@ -8,23 +8,41 @@ import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import createNewArticle from '../../src/ui/actions/article/createNewArticle';
 import { TITLE_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
 
-test('edit article negative tests', async ({ page }) => {
-  const homePage = new HomePage(page);
-  const viewArticlePage = new ViewArticlePage(page);
-  const editArticlePage = new EditArticlePage(page);
+test.describe('Edit Article Negative Tests', () => {
+  let homePage;
+  let viewArticlePage;
+  let editArticlePage;
+  let user;
+  let article;
 
-  const user = generateNewUserData();
-  await signUpUser(page, user);
+  test.beforeEach(async ({ page }) => {
+    homePage = new HomePage(page);
+    viewArticlePage = new ViewArticlePage(page);
+    editArticlePage = new EditArticlePage(page);
 
-  const article = generateNewArticleData();
-  await createNewArticle(page, article);
+    user = generateNewUserData();
+    await signUpUser(page, user);
 
-  // Przejdź do edycji artykułu
-  await viewArticlePage.clickEditArticleButton();
+    article = generateNewArticleData();
+    await createNewArticle(page, article);
+    await viewArticlePage.clickEditArticleButton();
+  });
 
-  // Usuń tytuł i spróbuj zapisać
-  await editArticlePage.fillTitleField('');
-  await editArticlePage.clickUpdateArticleButton();
+  test('Remove title', async () => {
+    await editArticlePage.fillTitleField('');
+    await editArticlePage.clickUpdateArticleButton();
+    await editArticlePage.assertErrorMessageContainsText(TITLE_CANNOT_BE_EMPTY);
+  });
 
-  await editArticlePage.assertErrorMessageContainsText(TITLE_CANNOT_BE_EMPTY);
+  test('Remove description', async () => {
+    await editArticlePage.fillDescriptionField('');
+    await editArticlePage.clickUpdateArticleButton();
+    // dodaj asercję jeśli jest komunikat błędu dla opisu
+  });
+
+  test('Remove text', async () => {
+    await editArticlePage.fillTextField('');
+    await editArticlePage.clickUpdateArticleButton();
+    // dodaj asercję jeśli jest komunikat błędu dla treści artykułu
+  });
 });

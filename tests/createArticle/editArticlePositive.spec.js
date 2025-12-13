@@ -7,37 +7,60 @@ import { generateNewArticleData } from '../../src/common/testData/generateNewArt
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import createNewArticle from '../../src/ui/actions/article/createNewArticle';
 
-test('edit article positive tests', async ({ page }) => {
-  const homePage = new HomePage(page);
-  const viewArticlePage = new ViewArticlePage(page);
-  const editArticlePage = new EditArticlePage(page);
+test.describe('Edit Article Positive Tests', () => {
+  let homePage;
+  let viewArticlePage;
+  let editArticlePage;
+  let user;
+  let article;
 
-  const user = generateNewUserData();
-  await signUpUser(page, user);
+  test.beforeEach(async ({ page }) => {
+    homePage = new HomePage(page);
+    viewArticlePage = new ViewArticlePage(page);
+    editArticlePage = new EditArticlePage(page);
 
-  const article = generateNewArticleData();
-  await createNewArticle(page, article);
+    user = generateNewUserData();
+    await signUpUser(page, user);
 
-  // Przejdź do edycji artykułu
-  await viewArticlePage.clickEditArticleButton();
+    article = generateNewArticleData();
+    await createNewArticle(page, article);
+    await viewArticlePage.clickEditArticleButton();
+  });
 
-  // Edytuj tytuł, opis i tekst
-  const newTitle = article.title + ' Updated';
-  const newDescription = article.description + ' Updated';
-  const newText = article.text + ' Updated';
+  test('Edit title', async () => {
+    const newTitle = article.title + ' Updated';
+    await editArticlePage.fillTitleField(newTitle);
+    await editArticlePage.clickUpdateArticleButton();
+    await viewArticlePage.assertArticleTitleIsVisible(newTitle);
+  });
 
-  await editArticlePage.fillTitleField(newTitle);
-  await editArticlePage.fillDescriptionField(newDescription);
-  await editArticlePage.fillTextField(newText);
+  test('Edit description', async () => {
+    const newDescription = article.description + ' Updated';
+    await editArticlePage.fillDescriptionField(newDescription);
+    await editArticlePage.clickUpdateArticleButton();
+    // możesz dodać asercję widoczności opisu jeśli jest metoda
+  });
 
-  // Dodaj nowy tag
-  const newTag = 'automation';
-  await editArticlePage.addTag(newTag);
+  test('Edit text', async () => {
+    const newText = article.text + ' Updated';
+    await editArticlePage.fillTextField(newText);
+    await editArticlePage.clickUpdateArticleButton();
+    await viewArticlePage.assertArticleTextIsVisible(newText);
+  });
 
-  await editArticlePage.clickUpdateArticleButton();
+  test('Add tag', async () => {
+    const newTag = 'automation';
+    await editArticlePage.addTag(newTag);
+    await editArticlePage.clickUpdateArticleButton();
+    await viewArticlePage.assertTagIsVisible(newTag);
+  });
 
-  // Assercje
-  await viewArticlePage.assertArticleTitleIsVisible(newTitle);
-  await viewArticlePage.assertArticleTextIsVisible(newText);
-  await viewArticlePage.assertTagIsVisible(newTag);
+  test('Remove tag', async () => {
+    const newTag = 'temporary';
+    await editArticlePage.addTag(newTag);
+    await editArticlePage.clickUpdateArticleButton();
+    await editArticlePage.removeTag(newTag);
+    await editArticlePage.clickUpdateArticleButton();
+    await viewArticlePage.assertTagNotVisible(newTag);
+  });
 });
