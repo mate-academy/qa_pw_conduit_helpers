@@ -45,3 +45,13 @@ Add an action function for creating new articles:
 2. Push the code to the origin.
 3. Create a PR for your changes.
 4. Keep implementing suggestions from code review until your PR is approved.
+
+
+async clickUpdateArticleButton() {
+    await test.step('Click Update Article button', async () => {
+      await this.updateArticleButton.click();
+    });
+  }
+
+
+  
