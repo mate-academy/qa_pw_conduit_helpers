@@ -6,10 +6,13 @@ import { generateNewArticleData } from '../../src/common/testData/generateNewArt
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 
+
 let homePage;
 let createArticlePage;
 let viewArticlePage;
 let article;
+
+
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
@@ -17,6 +20,8 @@ test.beforeEach(async ({ page }) => {
   viewArticlePage = new ViewArticlePage(page);
   article = generateNewArticleData();
   const user = generateNewUserData();
+  
+ 
 
   await signUpUser(page, user);
 });
@@ -27,6 +32,7 @@ test('Creat an article with required fields', async () => {
   await createArticlePage.fillTitleField(article.title);
   await createArticlePage.fillDescriptionField(article.description);
   await createArticlePage.fillTextField(article.text);
+  await createArticlePage.fillTags(article.tags);
   await createArticlePage.clickPublishArticleButton();
 
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
