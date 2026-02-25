@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test';
 
-export class CreateArticlePage {
+export class CreateNewArticle {
   constructor(page) {
     this.page = page;
     this.titleField = page.getByPlaceholder('Article Title');
@@ -54,7 +54,7 @@ export class CreateArticlePage {
 
   async clearBody() {
     await test.step('Clear body field', async () => {
-      await this.bodyField.fill('');
+      await this.textField.fill('');
     });
   }
 

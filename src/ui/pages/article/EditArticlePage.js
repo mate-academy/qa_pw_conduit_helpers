@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
-import { createArticle } from '../../src/ui/actions/article/createArticle';
+import { CreateNewArticle } from '../../src/ui/pages/article/CreateNewArticlePage';
 
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
@@ -22,7 +22,7 @@ test.beforeEach(async ({ page }) => {
   article = generateNewArticleData(1);
 
   await signUpUser(page, user);
-  await createArticle(page, article);
+  await CreateNewArticle(page, article);
 });
 
 test('Edit article title', async () => {
@@ -57,7 +57,7 @@ test('Edit article body', async () => {
 
 test('Add tag to article without tags', async ({ page }) => {
   const articleWithoutTags = generateNewArticleData(0);
-  await createArticle(page, articleWithoutTags);
+  await CreateNewArticle(page, articleWithoutTags);
 
   await viewArticlePage.clickEditArticle();
   await editArticlePage.addTag('newTag');
