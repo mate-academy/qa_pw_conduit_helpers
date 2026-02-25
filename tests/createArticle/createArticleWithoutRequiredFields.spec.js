@@ -3,7 +3,7 @@ import { HomePage } from '../../src/ui/pages/HomePage';
 import { CreateNewArticle } from '../../src/ui/pages/article/CreateNewArticlePage';
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
-import { ERROR_MESSAGES} from '../../src/ui/constants/articleErrorMessages';
+import { ERROR_MESSAGES } from '../../src/ui/constants/articleErrorMessages';
 
 let homePage;
 let createArticlePage;

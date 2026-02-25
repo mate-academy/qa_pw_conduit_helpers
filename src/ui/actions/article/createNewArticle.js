@@ -1,11 +1,11 @@
 import { test } from '@playwright/test';
-import { CreateArticlePage } from '../../pages/article/CreateNewArticlePage';
+import { CreateNewArticle } from '../../src/ui/pages/article/CreateNewArticlePage';
 import { HomePage } from '../../pages/HomePage';
 
-export async function createArticle(page, article) {
+export async function createNewArticle (page, article) {
   await test.step('Create article', async () => {
     const homePage = new HomePage(page);
-    const createArticlePage = new CreateArticlePage(page);
+    const createArticlePage = new CreateNewArticle(page);
 
     await homePage.clickNewArticleLink();
 
