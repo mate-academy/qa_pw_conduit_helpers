@@ -1,21 +1,21 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 
 export class ProfilePage {
   constructor(page) {
     this.page = page;
-    this.profilelink = page.getByRole('link', { name: /your profile image/i });
-  }
-
-
-  async open() {
-    await test.step(`Open 'Home' page`, async () => {
-      await this.page.goto('/');
-    });
+    this.profilelink = page.locator('.nav-link').last();
+    this.articlePreview = page.locator('.article-preview');
   }
 
   async clickProfileLink() {
     await test.step(`Click the 'Profile' link`, async () => {
       await this.profilelink.click();
+    });
+  }
+
+  async assertArticleDescriptionVisible(description) {
+    await test.step(`Assert that article description is visible`, async () => {
+      await expect(this.articlePreview).toContainText(description);
     });
   }
 }

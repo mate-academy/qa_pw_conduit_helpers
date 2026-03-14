@@ -52,7 +52,7 @@ test('Edit the article description for the article', async ({ page }) => {
   await viewArticlePage.refreshPage();
   await profilePage.clickProfileLink();
 
-  await viewArticlePage.assertArticleTextVisible(description);
+  await profilePage.assertArticleDescriptionVisible(description);
 });
 
 test('Edit the article text for the article', async ({ page }) => {
@@ -86,7 +86,7 @@ test('Add the tag for the article without tags', async ({ page }) => {
 test('Add the tag for the article with tags', async ({ page }) => {
   const article = generateNewArticleData(2);
   const tag = faker.lorem.word();
-
+  console.log()
   await createNewArticle(page, article);
   await viewArticlePage.clickEditArticleButton();
   await editArticlePage.fillTagsField(tag);
@@ -100,9 +100,12 @@ test('Add the tag for the article with tags', async ({ page }) => {
 test('Remove an article tag for the article with tag', async ({ page }) => {
   const article = generateNewArticleData(1);
   await createNewArticle(page, article);
+  const tagText = article.tags[0];
+
   await viewArticlePage.clickEditArticleButton();
-  await editArticlePage.removeArticleTag();
+  await editArticlePage.removeArticleTag(tagText);
   await editArticlePage.clickUpdateArticleButton();
+  await viewArticlePage.waitForArticlePage();
   await viewArticlePage.refreshPage();
 
   await viewArticlePage.assertArticleTagNotVisible();

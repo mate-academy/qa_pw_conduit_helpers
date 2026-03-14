@@ -13,12 +13,6 @@ export class HomePage {
     });
   }
 
-  async open() {
-    await test.step(`Open 'Profile' page`, async () => {
-      await this.page.goto('/');
-    });
-  }
-
   async assertYourFeedTabIsVisible() {
     await test.step(`Assert the 'Your Feed' tab is visible`, async () => {
       await expect(this.yourFeedTab).toBeVisible();

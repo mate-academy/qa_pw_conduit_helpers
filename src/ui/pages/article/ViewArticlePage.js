@@ -5,8 +5,9 @@ export class ViewArticlePage {
     this.page = page;
     this.articleTitleHeader = page.getByRole('heading');
     this.articleTags = page.locator('ul.tag-list');
-    this.editArticleButton = page.getByRole('link',
-      { name: 'Edit Article' }).first();
+    this.articleBody = page.locator('.article-content');
+    this.editArticleButton = page.locator('.article-actions').getByRole('link',
+      { name: 'Edit Article' });
   }
 
   async clickEditArticleButton() {
@@ -35,7 +36,7 @@ export class ViewArticlePage {
 
   async assertArticleTextVisible(text) {
     await test.step(`Assert the article has correct text'`, async () => {
-      await expect(this.page.getByText(text)).toBeVisible();
+      await expect(this.articleBody.getByText(text)).toBeVisible();
     });
   }
 
@@ -48,12 +49,6 @@ export class ViewArticlePage {
   async assertArticleTagNotVisible() {
     await test.step(`Assert the article doesn't have tag'`, async () => {
       await expect(this.articleTags).toBeHidden();
-    });
-  }
-
-  async assertErrorMessageContainsText(messageText) {
-    await test.step(`Assert the '${messageText}' error is shown`, async () => {
-      await expect(this.errorMessage).toContainText(messageText);
     });
   }
 }

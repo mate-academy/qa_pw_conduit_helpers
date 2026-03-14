@@ -6,17 +6,11 @@ export class EditArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
-    this.tagtField = page.getByPlaceholder('Enter tags');
+    this.tagField = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Update Article',
     });
     this.errorMessage = page.getByRole('list').nth(1);
-  }
-
-  async open() {
-    await test.step(`Open 'Create Article' page`, async () => {
-      await this.page.goto('/editor', { waitUntil: 'commit' });
-    });
   }
 
   async fillTitleField(title) {
@@ -39,8 +33,8 @@ export class EditArticlePage {
 
   async fillTagsField(tag) {
     await test.step(`Fill the 'Tags' field`, async () => {
-      await this.tagtField.fill(tag);
-      await this.tagtField.press('Enter');
+      await this.tagField.fill(tag);
+      await this.tagField.press('Enter');
     });
   }
 
@@ -50,9 +44,9 @@ export class EditArticlePage {
     });
   }
 
-  async removeArticleTag() {
+  async removeArticleTag(tagText) {
     await test.step('Remove the tag from the article', async () => {
-      await this.page.locator('form i').click();
+      await this.page.getByText(tagText).locator('i').click();
     });
   }
 
