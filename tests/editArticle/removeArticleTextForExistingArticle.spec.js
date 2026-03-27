@@ -3,7 +3,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
-import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
+import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
 import { TEXT_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
 

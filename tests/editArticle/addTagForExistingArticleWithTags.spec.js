@@ -3,7 +3,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
-import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
+import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
 
 let viewArticlePage;
@@ -21,14 +21,15 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('Add tag for existing article with tags', async ({ page }) => {
-  console.log('article.tags:', article.tags); 
+  const newTag = generateNewArticleData(5);
+  const expectedAllTags = [...article.tags, ...newTag.tags];
   await viewArticlePage.clickEditArticleButton();
-  await editArticlePage.fillTagsField(article.tags);
+  await editArticlePage.fillTagsField(newTag.tags);
   await page.waitForTimeout(2000); // as the tags are not 
   // visible immediately after filling the field
   await editArticlePage.clickUpdateArticleButton();
 
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
   await viewArticlePage.assertArticleTextIsVisible(article.text);
-  await viewArticlePage.assertTagsAreVisible(article.tags);
+  await viewArticlePage.assertTagsAreVisible(expectedAllTags);
 });
