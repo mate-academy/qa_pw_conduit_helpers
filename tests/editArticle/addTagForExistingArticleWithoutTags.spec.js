@@ -3,7 +3,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
-import { createNewArticleWithoutTags } from '../../src/ui/actions/auth/article/createNewArticle';
+import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
 
 let viewArticlePage;
@@ -17,7 +17,7 @@ test.beforeEach(async ({ page }) => {
   editArticlePage = new EditArticlePage(page);
 
   await signUpUser(page, user);
-  await createNewArticleWithoutTags(page, article);
+  await createNewArticle(page, article);
 });
 
 test('Add tag for existing article without tags', async ({ page }) => {

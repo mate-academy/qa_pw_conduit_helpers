@@ -3,7 +3,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
-import { createNewArticleWithTags } from '../../src/ui/actions/auth/article/createNewArticle';
+import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
 
 let viewArticlePage;
@@ -17,13 +17,15 @@ test.beforeEach(async ({ page }) => {
   editArticlePage = new EditArticlePage(page);
 
   await signUpUser(page, user);
-  await createNewArticleWithTags(page, article);
+  await createNewArticle(page, article);
 });
 
 test('Edit article description for existing article', async () => {
+  const newDescription = generateNewArticleData(1).description;
   await viewArticlePage.clickEditArticleButton();
 
-  await editArticlePage.fillDescriptionField(article.description);
+  await editArticlePage.fillDescriptionField(newDescription);
+  await editArticlePage.page.waitForTimeout(2000);
   await editArticlePage.clickUpdateArticleButton();
 
   await viewArticlePage.assertArticleTitleIsVisible(article.title);

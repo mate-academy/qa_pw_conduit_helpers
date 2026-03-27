@@ -3,7 +3,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
-import { createNewArticleWithTags } from '../../src/ui/actions/auth/article/createNewArticle';
+import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
 import { TITLE_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
 
@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
   editArticlePage = new EditArticlePage(page);
 
   await signUpUser(page, user);
-  await createNewArticleWithTags(page, article);
+  await createNewArticle(page, article);
 });
 
 test('Remove an article title for existing article', async () => {

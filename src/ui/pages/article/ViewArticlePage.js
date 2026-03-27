@@ -3,7 +3,9 @@ import { test, expect } from '@playwright/test';
 export class ViewArticlePage {
   constructor(page) {
     this.page = page;
-    this.articleTitleHeader = page.getByRole('heading');
+    this.articleTitleHeader = page.locator('h1');
+    //this.articleTitleHeader = page.getByRole('heading');
+    this.articleContentContainer = page.locator('.article-content');
     this.editArticleButton = page.getByRole('link', { name: ' Edit Article' })
     .first();
     this.tagsList = page.locator('ul.tag-list');
@@ -23,7 +25,8 @@ export class ViewArticlePage {
 
   async assertArticleTextIsVisible(text) {
     await test.step(`Assert the article has correct text'`, async () => {
-      await expect(this.page.getByText(text)).toBeVisible();
+      const textLocator = this.articleContentContainer.getByText(text);
+      await expect(textLocator).toBeVisible();
     });
   }
 

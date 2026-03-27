@@ -32,6 +32,7 @@ export class EditArticlePage {
   async fillTextField(text) {
     await test.step(`Fill the 'Text' field`, async () => {
       await this.textField.fill(text);
+      await this.page.keyboard.press('Enter');
     });
   }
   async fillTagsField(tags) {
@@ -47,7 +48,6 @@ export class EditArticlePage {
   async clickUpdateArticleButton() {
     await test.step(`Click the 'Update Article' button`, async () => {
       await this.updateArticleButton.click();
-
     });
   }
 

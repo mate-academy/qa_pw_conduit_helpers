@@ -3,7 +3,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
-import { createNewArticleWithTags } from '../../src/ui/actions/auth/article/createNewArticle';
+import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
 
 let viewArticlePage;
@@ -17,16 +17,18 @@ test.beforeEach(async ({ page }) => {
   editArticlePage = new EditArticlePage(page);
 
   await signUpUser(page, user);
-  await createNewArticleWithTags(page, article);
+  await createNewArticle(page, article);
 });
 
 test('Edit article text for existing article', async () => {
+  const newText = generateNewArticleData(1).text;
   await viewArticlePage.clickEditArticleButton();
 
-  await editArticlePage.fillTextField(article.text);
+  await editArticlePage.fillTextField(newText);
+  await editArticlePage.page.waitForTimeout(2000);
   await editArticlePage.clickUpdateArticleButton();
-
+  
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
-  await viewArticlePage.assertArticleTextIsVisible(article.text);
+  await viewArticlePage.assertArticleTextIsVisible(newText);
   await viewArticlePage.assertTagsAreVisible(article.tags);
 });
