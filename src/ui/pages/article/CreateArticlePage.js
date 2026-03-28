@@ -6,8 +6,12 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagsField = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
+    });
+    this.updateArticleButton = page.getByRole('button', {
+      name: 'Update Article',
     });
     this.errorMessage = page.getByRole('list').nth(1);
   }
@@ -30,9 +34,35 @@ export class CreateArticlePage {
     });
   }
 
+  async fillTagsField(tags) {
+    await test.step(`Fill the 'Tags' field`, async () => {
+      let tagsValue = '';
+      if (Array.isArray(tags)) {
+        tagsValue = tags.join(', ');
+      } else if (typeof tags === 'string') {
+        tagsValue = tags;
+      } else if (tags == null) {
+        tagsValue = '';
+      } else {
+        throw new TypeError(`Expected tags to be an array or string, got ${typeof tags}`);
+      }
+      await this.tagsField.fill(tagsValue);
+    });
+  }
+
+  async fillTagField(tags) {
+    return this.fillTagsField(tags);
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
+    });
+  }
+
+  async clickUpdateArticleButton() {
+    await test.step(`Click the 'Update Article' button`, async () => {
+      await this.updateArticleButton.click();
     });
   }
 
