@@ -5,6 +5,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
+import { create } from 'domain';
 
 let homePage;
 let createArticlePage;
@@ -27,7 +28,11 @@ test('Creat an article with required fields', async () => {
   await createArticlePage.fillTitleField(article.title);
   await createArticlePage.fillDescriptionField(article.description);
   await createArticlePage.fillTextField(article.text);
+  await createArticlePage.fillTagField(article.tags[0]);
   await createArticlePage.clickPublishArticleButton();
+
+  // Wait for navigation to article page
+  await viewArticlePage.page.waitForURL('**/article/**');
 
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
   await viewArticlePage.assertArticleTextIsVisible(article.text);
