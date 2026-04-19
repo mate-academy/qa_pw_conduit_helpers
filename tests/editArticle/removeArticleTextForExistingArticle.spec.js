@@ -4,7 +4,7 @@ import { generateNewArticleData } from '../../src/common/testData/generateNewArt
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
-import { EditArticlePage } from '../../src/ui/pages/article/EditAriclePage';
+import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
 import { TEXT_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
 
 let viewArticlePage;
