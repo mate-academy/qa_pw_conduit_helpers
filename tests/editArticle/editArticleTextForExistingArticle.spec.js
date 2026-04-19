@@ -22,7 +22,7 @@ test.beforeEach(async ({ page }) => {
   await createNewArticle(page, article);
 });
 
-test('Edit the article title for the existing article', async () => {
+test('Edit the article text for the existing article', async () => {
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
   await viewArticlePage.clickEditArticleButton();  
   await editArticlePage.fillArticleTextWithNewData(newText);

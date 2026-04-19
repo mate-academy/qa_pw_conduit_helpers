@@ -5,7 +5,7 @@ import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 import { EditArticlePage } from '../../src/ui/pages/article/EditAriclePage';
-import { TITLE_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
+import { DESCRIPTION_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
 
 let viewArticlePage;
 let editArticlePage;
@@ -21,10 +21,11 @@ test.beforeEach(async ({ page }) => {
   await createNewArticle(page, article);
 });
 
-test('Edit the article title for the existing article', async () => {
+test('Remove the article description for the existing article', async () => {
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
   await viewArticlePage.clickEditArticleButton();  
-  await editArticlePage.clearArticleTitleField();
+  await editArticlePage.clearArticleDescriptionField();
   await editArticlePage.clickUpdateArticleButton();
-  await editArticlePage.assertErrorMessageContainsText(TITLE_CANNOT_BE_EMPTY);
+  await editArticlePage.assertErrorMessageContainsText(
+    DESCRIPTION_CANNOT_BE_EMPTY);
 }); 

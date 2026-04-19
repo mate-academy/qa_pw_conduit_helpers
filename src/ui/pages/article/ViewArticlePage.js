@@ -5,7 +5,7 @@ export class ViewArticlePage {
     this.page = page;
     this.articleTitleHeader = page.getByRole('heading');
     this.editArticleButton = page.getByRole(
-      'link', {name: ' Edit Article'}).first();
+      'link', {name: 'Edit Article'}).first();
   }
 
   async assertArticleTitleIsVisible(title) {
