@@ -12,3 +12,4 @@ export function generateNewArticleData(tagNumber = 0) {
 
   return article;
 }
+      
