@@ -11,8 +11,8 @@ test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
 
   user = {
-    email: 'test_new_user@gmail.com',
-    password: 'newpass123!',
+    email: 'testtgg1@gmail.com',
+    password: 'test1234',
   };
 });
 
@@ -21,6 +21,7 @@ test('Successful `Sign in` flow test', async () => {
   await signInPage.fillEmailField(user.email);
   await signInPage.fillPasswordField(user.password);
   await signInPage.clickSignInButton();
+
 
   await homePage.assertYourFeedTabIsVisible();
 });

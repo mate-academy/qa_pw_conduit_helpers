@@ -6,8 +6,12 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagsField = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
+    });
+    this.updateArticleButton = page.getByRole('button', {
+      name: 'Update Article',
     });
     this.errorMessage = page.getByRole('list').nth(1);
   }
@@ -30,6 +34,14 @@ export class CreateArticlePage {
     });
   }
 
+  async fillTagsField(tag) {
+    await test.step(`Fill the 'Tags' field`, async () => {
+      await this.tagsField.fill(tag);
+      await this.tagsField.press('Enter');
+      await this.page.keyboard.press('Enter');
+    });
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
@@ -39,6 +51,46 @@ export class CreateArticlePage {
   async assertErrorMessageContainsText(messageText) {
     await test.step(`Assert the '${messageText}' error is shown`, async () => {
       await expect(this.errorMessage).toContainText(messageText);
+    });
+  }
+
+  async clickUpdateArticleButton() {
+    await test.step(`Click the 'Update Article' button`, async () => {
+      await this.updateArticleButton.click();
+    });
+  }
+
+  async clickRemoveArticleTagButton(tag) {
+    await test.step(`Click the 'Remove Article Tag' button`, async () => {
+      await this.page
+      .locator('span')
+      .filter({ hasText: tag })
+      .locator('i')
+      .click();
+    });
+  }
+
+  async assertArticleTagIsVisible(tag) {
+    await test.step(`Assert the '${tag}' tag is visible`, async () => {
+      await expect(this.page.getByText(tag)).toBeVisible();
+    });
+  }
+
+  async clearArticleTextField() {
+    await test.step(`Clear the 'Text' field`, async () => {
+      await this.textField.clear();
+    });
+  }
+
+  async clearArticleDescriptionField() {
+    await test.step(`Clear the 'Description' field`, async () => {
+      await this.descriptionField.clear();
+    });
+  }
+
+  async clearArticleTitleField() {
+    await test.step(`Clear the 'Title' field`, async () => {
+      await this.titleField.clear();
     });
   }
 }
