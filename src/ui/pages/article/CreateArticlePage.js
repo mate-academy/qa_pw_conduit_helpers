@@ -6,6 +6,7 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagsField = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
@@ -35,6 +36,12 @@ export class CreateArticlePage {
       await this.publishArticleButton.click();
     });
   }
+
+  async fillTagField(tag) {
+    await test.step(`Fill 'tags' field`, async () =>{
+      await this.tagsField.fill(tag);
+    });
+  } 
 
   async assertErrorMessageContainsText(messageText) {
     await test.step(`Assert the '${messageText}' error is shown`, async () => {
