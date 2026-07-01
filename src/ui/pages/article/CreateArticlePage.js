@@ -6,6 +6,7 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagField = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
@@ -15,6 +16,7 @@ export class CreateArticlePage {
   async fillTitleField(title) {
     await test.step(`Fill the 'Title' field`, async () => {
       await this.titleField.fill(title);
+      await expect(this.titleField).toHaveValue(title);
     });
   }
 
@@ -30,9 +32,32 @@ export class CreateArticlePage {
     });
   }
 
+  async addTag(tag) {
+    await test.step(`Fill the 'Tags' field`, async () => {
+      await this.tagField.fill(tag);
+      await this.page.keyboard.press('Enter');
+    });
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
+    });
+  }
+
+  async submitArticleForm(article) {
+    await test.step(`Fill the 'Create Article' form`, async () => {
+      await this.fillTitleField(article.title);
+      await this.fillDescriptionField(article.description);
+      await this.fillTextField(article.text);
+
+      if (Array.isArray(article.tags) && article.tags.length > 0) {
+        for (const tag of article.tags) {
+          await this.addTag(tag);
+        }
+      }
+
+      await this.clickPublishArticleButton();
     });
   }
 
