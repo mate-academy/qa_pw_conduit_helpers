@@ -27,6 +27,7 @@ test('Creat an article with required fields', async () => {
   await createArticlePage.fillTitleField(article.title);
   await createArticlePage.fillDescriptionField(article.description);
   await createArticlePage.fillTextField(article.text);
+  
   await createArticlePage.clickPublishArticleButton();
 
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
