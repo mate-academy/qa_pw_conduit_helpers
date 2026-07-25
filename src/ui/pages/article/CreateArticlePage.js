@@ -9,23 +9,34 @@ export class CreateArticlePage {
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
+    this.articleTagsField = page.getByPlaceholder('Enter tags');
     this.errorMessage = page.getByRole('list').nth(1);
   }
 
   async fillTitleField(title) {
-    await test.step(`Fill the 'Title' field`, async () => {
+    await test.step(`Fill the 'Title' field with '${title}'`, async () => {
       await this.titleField.fill(title);
     });
   }
 
   async fillDescriptionField(description) {
-    await test.step(`Fill the 'Description' field`, async () => {
+    await test.step(`Fill the 'Description' field with '${description}'`, async () => {
       await this.descriptionField.fill(description);
     });
   }
 
+  async fillTagsField(tags) {
+    await test.step(`Fill the 'Article Tags' field with '${tags}'`, async () => {
+      for (const tag of tags) {
+        await this.articleTagsField.fill(tag);
+        await this.page.keyboard.press('Enter'); 
+      }
+    });
+  }
+
+
   async fillTextField(text) {
-    await test.step(`Fill the 'Text' field`, async () => {
+    await test.step(`Fill the 'Text' field with '${text}'`, async () => {
       await this.textField.fill(text);
     });
   }
