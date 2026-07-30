@@ -7,7 +7,7 @@ export async function createNewArticle(page, article) {
 
     await createArticlePage.fillTitleField(article.title);
     await createArticlePage.fillDescriptionField(article.description);
-    await createArticlePage.fillTextField(article.body || article.text);
+    await createArticlePage.fillBodyField(article.body || article.text);
 
     let tagToFill = null;
     if (typeof article.tag === 'string') {

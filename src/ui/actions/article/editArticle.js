@@ -23,9 +23,9 @@ export async function editArticle(page, articleData) {
 
     if (articleData.body !== undefined) {
       if (articleData.body === '') {
-        await editArticlePage.clearTextField();
+        await editArticlePage.clearBodyField();
       } else {
-        await editArticlePage.fillTextField(articleData.body);
+        await editArticlePage.fillBodyield(articleData.body);
       }
     }
 

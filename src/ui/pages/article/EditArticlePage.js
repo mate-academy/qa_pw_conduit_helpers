@@ -28,10 +28,10 @@ export class EditArticlePage {
     });
   }
 
-  async fillTextField(text) {
+  async filBodyField(text) {
     await test.step(`Fill the 'Text' field with: ${text}`, async () => {
-      await expect(this.textField).not.toHaveValue('');
-      await this.textField.fill(text);
+      await expect(this.bodyField).not.toHaveValue('');
+      await this.bodyField.fill(text);
     });
   }
 
