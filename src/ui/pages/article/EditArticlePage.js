@@ -5,7 +5,7 @@ export class EditArticlePage {
     this.page = page;
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
-    this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.bodyField = page.getByPlaceholder('Write your article (in markdown)');
     this.tagField = page.getByPlaceholder('Enter tags');
     this.updateArticleButton = page.getByRole('button', {
       name: 'Update Article',
@@ -49,10 +49,10 @@ export class EditArticlePage {
     });
   }
 
-  async clearTextField() {
-    await test.step(`Clear the 'Text' field`, async () => {
-      await this.textField.click();
-      await this.textField.clear();
+  async clearBodyField() {
+    await test.step(`Clear the 'Body' field`, async () => {
+      await this.bodyField.click();
+      await this.bodyField.clear();
     });
   }
 

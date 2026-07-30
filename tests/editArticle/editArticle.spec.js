@@ -140,6 +140,25 @@ test.describe('Conduit - Edit Article Feature Tests', () => {
     );
   });
 
+  test('Remove an article body for the existing article', async ({ page }) => {
+    const editArticlePage = new EditArticlePage(page);
+
+    await page.goto('/editor');
+    const article = generateNewArticleData();
+    await createNewArticle(page, article);
+    await page.waitForURL('**/article/**');
+    await page.getByRole('link', { name: 'Edit Article' }).first().click();
+    await page.waitForURL('**/editor/**');
+
+    await editArticlePage.clearBodyField();
+
+    await editArticlePage.clickUpdateArticleButton();
+
+    await editArticlePage.assertErrorMessageContainsText(
+      ARTICLE_ERRORS.bodyRequired,
+    );
+  });
+
   test('Remove an article description for the existing article', async ({
     page,
   }) => {
@@ -157,6 +176,40 @@ test.describe('Conduit - Edit Article Feature Tests', () => {
     await editArticlePage.assertErrorMessageContainsText(
       ARTICLE_ERRORS.descriptionRequired,
     );
+  });
+
+  test('Add the tag for the existing article with tags', async ({ page }) => {
+    const editArticlePage = new EditArticlePage(page);
+
+    await page.goto('/editor');
+    const article = generateNewArticleData();
+
+    await page.getByPlaceholder('Article Title').fill(article.title);
+    await page
+      .getByPlaceholder("What's this article about?")
+      .fill(article.description);
+    await page
+      .getByPlaceholder('Write your article (in markdown)')
+      .fill(article.body);
+
+    await page.getByPlaceholder('Enter tags').fill('first-tag');
+    await page.keyboard.press('Enter');
+
+    await page.getByRole('button', { name: 'Publish Article' }).click();
+    await page.waitForURL('**/article/**');
+
+    await page.getByRole('link', { name: 'Edit Article' }).first().click();
+    await page.waitForURL('**/editor/**');
+
+    await page.getByPlaceholder('Enter tags').fill('second-tag');
+    await page.keyboard.press('Enter');
+
+    await editArticlePage.clickUpdateArticleButton();
+    await page.waitForURL('**/article/**');
+    await page.reload();
+
+    await expect(page.locator('.tag-list')).toContainText('first-tag');
+    await expect(page.locator('.tag-list')).toContainText('second-tag');
   });
 
   test('Edit multiple fields simultaneously', async ({ page }) => {
