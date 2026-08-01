@@ -11,6 +11,7 @@ let homePage;
 let editArticlePage;
 let viewArticlePage;
 let article;
+let newText;
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
@@ -18,6 +19,7 @@ test.beforeEach(async ({ page }) => {
   viewArticlePage = new ViewArticlePage(page);
   const user = generateNewUserData();
   article = generateNewArticleData();
+  newText = generateNewArticleData().text;
 
   await signUpUser(page, user);
   await createNewArticle(page, article);
@@ -26,7 +28,7 @@ test.beforeEach(async ({ page }) => {
 
 test('Edit the text of an existing article', async () => {
   await viewArticlePage.clickEditArticleButton();
-  await editArticlePage.fillTextField(article.text);
+  await editArticlePage.fillTextField(newText);
   await editArticlePage.clickUpdateArticleButton();
-  await viewArticlePage.assertArticleTextIsVisible(article.text);
+  await viewArticlePage.assertArticleTextIsVisible(newText);
 });

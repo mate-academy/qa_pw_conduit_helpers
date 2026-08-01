@@ -11,6 +11,7 @@ let homePage;
 let editArticlePage;
 let viewArticlePage;
 let article;
+let newTitle;
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
@@ -18,16 +19,19 @@ test.beforeEach(async ({ page }) => {
   viewArticlePage = new ViewArticlePage(page);
   const user = generateNewUserData();
   article = generateNewArticleData();
+  newTitle = generateNewArticleData().title;
 
   await signUpUser(page, user);
   await createNewArticle(page, article);
 
 });
 
-test('Edit the title of an existing article', async () => {
+test('Edit the title of an existing article', async ({ page }) => {
   await viewArticlePage.clickEditArticleButton();
-  await editArticlePage.fillTitleField(article.title);
+  await editArticlePage.fillTitleField(newTitle);
   await editArticlePage.clickUpdateArticleButton();
-  await viewArticlePage.assertArticleTitleIsVisible(article.title);
+  await page.waitForLoadState('networkidle');
+  await page.reload();
+  await viewArticlePage.assertArticleTitleIsVisible(newTitle);
   await viewArticlePage.assertArticleTextIsVisible(article.text);
 });

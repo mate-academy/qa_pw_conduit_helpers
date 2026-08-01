@@ -26,9 +26,11 @@ test.beforeEach(async ({ page }) => {
 
 });
 
-test('Edit the tags of an existing article without tags', async () => {
+test('Edit the tags of an existing article without tags', async ({page}) => {
   await viewArticlePage.clickEditArticleButton();
   await editArticlePage.fillTagsField(newTags);
   await editArticlePage.clickUpdateArticleButton();
+  await page.waitForLoadState('networkidle');
+  await page.reload();
   await viewArticlePage.assertArticleTagsAreVisible(newTags);
 });
