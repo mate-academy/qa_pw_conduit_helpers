@@ -11,6 +11,7 @@ let homePage;
 let editArticlePage;
 let viewArticlePage;
 let article;
+let newTags;
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
@@ -18,6 +19,7 @@ test.beforeEach(async ({ page }) => {
   viewArticlePage = new ViewArticlePage(page);
   const user = generateNewUserData();
   article = generateNewArticleData();
+  newTags = generateNewArticleData(2).tags;
 
   await signUpUser(page, user);
   await createNewArticle(page, article);
@@ -26,7 +28,7 @@ test.beforeEach(async ({ page }) => {
 
 test('Edit the tags of an existing article without tags', async () => {
   await viewArticlePage.clickEditArticleButton();
-  await editArticlePage.fillTagsField(article.tags);
+  await editArticlePage.fillTagsField(newTags);
   await editArticlePage.clickUpdateArticleButton();
-  await viewArticlePage.assertArticleTagsAreVisible(article.tags);
+  await viewArticlePage.assertArticleTagsAreVisible(newTags);
 });

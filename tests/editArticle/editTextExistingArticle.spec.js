@@ -24,9 +24,9 @@ test.beforeEach(async ({ page }) => {
 
 });
 
-test('Edit the tags of an existing article', async () => {
+test('Edit the text of an existing article', async () => {
   await viewArticlePage.clickEditArticleButton();
-  await editArticlePage.fillTagsField(article.tags);
+  await editArticlePage.fillTextField(article.text);
   await editArticlePage.clickUpdateArticleButton();
-  await viewArticlePage.assertArticleTagsAreVisible(article.tags);
+  await viewArticlePage.assertArticleTextIsVisible(article.text);
 });

@@ -11,6 +11,7 @@ let homePage;
 let editArticlePage;
 let viewArticlePage;
 let article;
+let newDescription;
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
@@ -18,14 +19,21 @@ test.beforeEach(async ({ page }) => {
   viewArticlePage = new ViewArticlePage(page);
   const user = generateNewUserData();
   article = generateNewArticleData();
+  newDescription = generateNewArticleData().description;
 
   await signUpUser(page, user);
   await createNewArticle(page, article);
 
 });
 
-test('Edit the description of an existing article', async () => {
+test('Edit the description of an existing article', async ({page}) => {
   await viewArticlePage.clickEditArticleButton();
-  await editArticlePage.fillDescriptionField(article.description);
+  await editArticlePage.fillDescriptionField(newDescription);
   await editArticlePage.clickUpdateArticleButton();
+  await page.waitForLoadState('networkidle');
+  await homePage.clickHomePageLink();
+  await page.waitForLoadState('networkidle');
+  await page.reload();
+  await homePage.clickGlobalFeedTab();
+  await homePage.assertArticleDescriptionIsVisible(newDescription);
 });

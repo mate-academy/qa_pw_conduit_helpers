@@ -11,22 +11,27 @@ let homePage;
 let editArticlePage;
 let viewArticlePage;
 let article;
+let newTags;
 
 test.beforeEach(async ({ page }) => {
   homePage = new HomePage(page);
   editArticlePage = new EditArticlePage(page);
   viewArticlePage = new ViewArticlePage(page);
+
   const user = generateNewUserData();
   article = generateNewArticleData(2);
+  newTags = generateNewArticleData(2).tags;
 
   await signUpUser(page, user);
   await createNewArticle(page, article);
 
 });
 
-test('Edit the tags of an existing article with tags', async () => {
+test('Edit the tags of an existing article with tags', async ({page}) => {
   await viewArticlePage.clickEditArticleButton();
-  await editArticlePage.fillTagsField(article.tags);
+  await editArticlePage.fillTagsField(newTags);
   await editArticlePage.clickUpdateArticleButton();
-  await viewArticlePage.assertArticleTagsAreVisible(article.tags);
+  await page.waitForLoadState('networkidle');
+  await page.reload();
+  await viewArticlePage.assertArticleTagsAreVisible([...article.tags, ...newTags]);
 });
