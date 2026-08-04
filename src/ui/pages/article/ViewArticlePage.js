@@ -25,7 +25,7 @@ export class ViewArticlePage {
 
   async clickEditArticleButton() {
   await test.step("Click 'Update Article' button", async () => {
-      this.editArticleButton.click()
+      await this.editArticleButton.click()
   });
 }
 

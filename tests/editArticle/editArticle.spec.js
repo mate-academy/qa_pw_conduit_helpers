@@ -64,6 +64,19 @@ test.describe('Edit Article Tests', () => {
     await viewArticlePage.assertArticleTextIsVisible(newText);
   });
 
+  test(`Add a tag for the existing article without tags`, async ({ page }) => {
+    const article = generateNewArticleData(0); // стаття без тегів
+    await homePage.clickNewArticleLink();
+    await createNewArticle(page, article);
+
+    const newTag = faker.lorem.word();
+
+    await viewArticlePage.clickEditArticleButton();
+    await editArticle(page, { addTag: newTag });
+
+    await viewArticlePage.assertArticleHasTag(newTag);
+  });
+
   test('Add the tag for the existing article with tags', async ({ page }) => {
   const article = generateNewArticleData(3); // стаття вже має теги
   await homePage.clickNewArticleLink();

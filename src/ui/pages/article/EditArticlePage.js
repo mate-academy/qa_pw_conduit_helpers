@@ -57,7 +57,7 @@ async addTag(tag) {
 
   async assertErrorMessageContainsText(expectedError) {
     await test.step(`Assert error message contains: "${expectedError}"`, async () => {
-      await expect(this.errorMessage).toBeVisible(expectedError);
+      await expect(this.errorMessage).toContainText(expectedError);
     });
   }
 }
