@@ -22,7 +22,7 @@ export class EditArticlePage {
     await test.step(`Fill article description in edit form: "${description}"`, async () => {
       await this.descriptionInput.fill(description);
     });
-  }
+  };
 
   async fillBody(body) {
     await test.step(`Fill article body in edit form: "${body}"`, async () => {
