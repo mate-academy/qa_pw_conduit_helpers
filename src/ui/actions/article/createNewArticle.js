@@ -13,7 +13,7 @@ export async function createNewArticle(page, article) {
     await createArticlePage.fillDescriptionField(article.description);
     await createArticlePage.fillTextField(article.text);
 
-    for (const tag of article.tags) {
+    for (const tag of article.tags || []) {
       await createArticlePage.fillTagsField(tag);
     }
 
