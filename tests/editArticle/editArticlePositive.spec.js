@@ -36,7 +36,7 @@ test.describe('Edit Article with existing tags', () => {
     await viewArticlePage.assertArticleTitleIsVisible(updatedTitle);
   });
 
-  test('Edit article description', async ({ page }) => {
+  test('Edit article description', async () => {
     const updatedDescription = 'Updated Description';
 
     await editArticlePage.editDescriptionField(updatedDescription);
@@ -46,7 +46,7 @@ test.describe('Edit Article with existing tags', () => {
     await profilePage.assertArticleDescriptionIsVisible(updatedDescription);
   });
 
-  test('Edit article text', async ({ page }) => {
+  test('Edit article text', async () => {
     const updatedText = 'Updated Text';
 
     await editArticlePage.editTextField(updatedText);
@@ -119,7 +119,7 @@ test.describe('Edit Article without tags', () => {
     await viewArticlePage.clickEditArticleLink();
   });
 
-  test('Add tag to article without tags', async ({ page }) => {
+  test('Add tag to article without tags', async () => {
     const newTag = 'new_tag';
 
     await editArticlePage.addArticleTag(newTag);
