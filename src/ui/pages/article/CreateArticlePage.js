@@ -6,27 +6,49 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagsField = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
     this.errorMessage = page.getByRole('list').nth(1);
   }
 
-  async fillTitleField(title) {
+  async fillTitleField(title = '') {
     await test.step(`Fill the 'Title' field`, async () => {
       await this.titleField.fill(title);
     });
   }
 
-  async fillDescriptionField(description) {
+  async fillDescriptionField(description = '') {
     await test.step(`Fill the 'Description' field`, async () => {
       await this.descriptionField.fill(description);
     });
   }
 
-  async fillTextField(text) {
+  async fillTextField(text = '') {
     await test.step(`Fill the 'Text' field`, async () => {
       await this.textField.fill(text);
+    });
+  }
+
+  async fillTagsField(tags = '') {
+    await test.step(`Fill the 'Tags' field`, async () => {
+      const tagValue = Array.isArray(tags) ? tags[0] : tags;
+      if (tagValue) {
+        await this.tagsField.fill(tagValue);
+        await this.tagsField.press('Enter');
+      }
+    });
+  }
+
+  async submitCreateNewArticle(article = {}) {
+    await test.step(`Fill the Article form`, async () => {
+      await this.fillTitleField(article.title || '');
+      await this.fillDescriptionField(article.description || '');
+      await this.fillTextField(article.text || '');
+      await this.fillTagsField(article.tags || '');
+
+      await this.clickPublishArticleButton();
     });
   }
 
