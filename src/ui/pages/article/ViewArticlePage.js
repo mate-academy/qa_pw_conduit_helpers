@@ -18,7 +18,7 @@ export class ViewArticlePage {
 
   async assertArticleTextIsVisible(text) {
     await test.step(`Assert the article has correct text'`, async () => {
-      await expect(this.articleTextContent).toBeVisible(text);
+      await expect(this.articleTextContent).toContainText(text);
     });
   }
 

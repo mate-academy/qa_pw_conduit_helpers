@@ -17,15 +17,15 @@ export class EditArticlePage {
 
     this.emptyTitleErrorMsg = page
       .locator('ul')
-      .filter({ hasText: ':Article title cannot be empty' });
+      .filter({ hasText: 'Article title cannot be empty' });
 
     this.emptyDescriptionErrorMsg = page
       .locator('ul')
-      .filter({ hasText: ':Article description cannot be empty' });
+      .filter({ hasText: 'Article description cannot be empty' });
 
     this.emptyTextErrorMsg = page
       .locator('ul')
-      .filter({ hasText: ':Article body cannot be empty' });
+      .filter({ hasText: 'Article body cannot be empty' });
   }
 
   async editArticleTitleField(title) {

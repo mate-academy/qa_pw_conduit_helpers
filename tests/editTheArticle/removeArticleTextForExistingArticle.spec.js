@@ -25,7 +25,8 @@ test.beforeEach(async ({ page }) => {
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
 });
 
-test('Remove an article text for the existing article', async ({}) => {
+// eslint-disable-next-line no-unused-vars
+test('Remove an article text for the existing article', async ({ page }) => {
   await viewArticlePage.clickEditArticleButton();
   await editArticlePage.removeArticleTextField();
   await editArticlePage.clickUpdateArticleButton();
