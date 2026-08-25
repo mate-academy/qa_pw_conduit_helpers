@@ -2,9 +2,10 @@ import { test } from '@playwright/test';
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
-import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
+import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
+import { TITLE_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
 
 let viewArticlePage;
 let article;
@@ -28,5 +29,5 @@ test('Remove an article title for the existing article', async ({}) => {
   await viewArticlePage.clickEditArticleButton();
   await editArticlePage.removeArticleTitleField();
   await editArticlePage.clickUpdateArticleButton();
-  await editArticlePage.assertEmptyTitleError('Article title cannot be empty');
+  await editArticlePage.assertEmptyTitleError(TITLE_CANNOT_BE_EMPTY);
 });

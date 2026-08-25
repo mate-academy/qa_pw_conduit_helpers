@@ -2,7 +2,7 @@ import { test } from '@playwright/test';
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
-import { createNewArticle } from '../../src/ui/actions/auth/article/createNewArticle';
+import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
 
@@ -24,7 +24,7 @@ test.beforeEach(async ({ page }) => {
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
 });
 
-test('Add tag for existing article without tags', async ({ page }) => {
+test('Add tag for existing article with tags', async ({ page }) => {
   const updatedArticle = generateNewArticleData(1);
 
   await viewArticlePage.clickEditArticleButton();
