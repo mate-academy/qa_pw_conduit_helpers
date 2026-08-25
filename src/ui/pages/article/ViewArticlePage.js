@@ -4,6 +4,10 @@ export class ViewArticlePage {
   constructor(page) {
     this.page = page;
     this.articleTitleHeader = page.getByRole('heading');
+    this.articleTextContent = page.locator('.article-content');
+    this.editArticleButton = page
+      .getByRole('link', { name: ' Edit Article' })
+      .first();
   }
 
   async assertArticleTitleIsVisible(title) {
@@ -14,7 +18,13 @@ export class ViewArticlePage {
 
   async assertArticleTextIsVisible(text) {
     await test.step(`Assert the article has correct text'`, async () => {
-      await expect(this.page.getByText(text)).toBeVisible();
+      await expect(this.articleTextContent).toContainText(text);
+    });
+  }
+
+  async clickEditArticleButton() {
+    await test.step(`Click the “Edit Article” button`, async () => {
+      await this.editArticleButton.click();
     });
   }
 }
