@@ -21,7 +21,7 @@ test.beforeEach(async ({ page }) => {
   await signUpUser(page, user);
 });
 
-test('Creat an article with required fields', async () => {
+test('Create an article with required fields', async () => {
   await homePage.clickNewArticleLink();
 
   await createArticlePage.fillTitleField(article.title);
