@@ -8,6 +8,7 @@ export async function createNewArticle(page, article) {
     const homePage = new HomePage(page);
     const createArticlePage = new CreateArticlePage(page);
     const viewArticlePage = new ViewArticlePage(page);
+    const { tags = [] } = article;
 
     await homePage.clickNewArticleLink();
 
@@ -15,7 +16,7 @@ export async function createNewArticle(page, article) {
     await createArticlePage.fillDescriptionField(article.description);
     await createArticlePage.fillTextField(article.text);
 
-    for (const tag of article.tags) {
+     for (const tag of tags) {
       await createArticlePage.fillTagsField(tag);
     }
 
