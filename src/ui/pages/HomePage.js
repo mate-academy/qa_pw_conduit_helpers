@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 export class HomePage {
   constructor(page) {
     this.page = page;
-    this.yourFeedTab = page.getByText('Your Feed');
+    this.yourFeedTab = page.locator('a.nav-link', { hasText: 'Your Feed' });
     this.newArticleLink = page.getByRole('link', { name: 'New Article' });
   }
 
