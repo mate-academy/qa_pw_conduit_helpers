@@ -6,7 +6,6 @@ import { createNewArticle } from '../../src/ui/actions/article/createNewArticle'
 import { CreateArticlePage } from '../../src/ui/pages/article/CreateArticlePage';
 import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 
-// editDescription.spec.js
 test('Edit the article description for the existing article', async ({
   page,
 }) => {

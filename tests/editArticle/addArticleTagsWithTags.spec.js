@@ -8,7 +8,7 @@ import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
 
 test('Add a tag for the existing article with tags', async ({ page }) => {
   const user = generateNewUserData();
-  const article = generateNewArticleData({ withTags: true });
+  const article = generateNewArticleData({ tagsCount: 1 });
   const newTag = 'playwright';
 
   await signUpUser(page, user);
