@@ -16,8 +16,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 async function createAndEdit(page, initialArticle, editedArticle, options = {}) {
-  await createNewArticle(page, initialArticle);
-  await editArticle(page, editedArticle, options);
+  await test.step('Create article and edit it', async () => {
+    await createNewArticle(page, initialArticle);
+    await editArticle(page, editedArticle, options);
+  });
 }
 
 test('Edit the article title', async ({ page }) => {
@@ -45,6 +47,12 @@ test('Add a tag to an article with tags', async ({ page }) => {
   const article = generateNewArticleData(1);
   const tag = generateNewArticleData(1).tags[0];
   await createAndEdit(page, article, article, {tagsToAdd: [tag]});
+});
+
+test('Add multiple tags to an article', async ({ page }) => {
+  const article = generateNewArticleData();
+  const tags = generateNewArticleData(2).tags;
+  await createAndEdit(page, article, article, {tagsToAdd: tags});
 });
 
 test('Remove a tag from an article', async ({ page }) => {

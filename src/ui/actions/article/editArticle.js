@@ -4,7 +4,9 @@ import {test} from '@playwright/test';
 
 export async function editArticle(page, article, options = {}) {
   const viewArticlePage = new ViewArticlePage(page);
-  const {tagsToAdd = [], tagsToRemove = [], expectedError} = options;
+  const tagsToAdd = Array.isArray(options.tagsToAdd) ? options.tagsToAdd : [];
+  const tagsToRemove = Array.isArray(options.tagsToRemove) ? options.tagsToRemove : [];
+  const {expectedError} = options;
 
   await test.step('Edit existing article', async () => {
     const editArticlePage = new EditArticlePage(page);

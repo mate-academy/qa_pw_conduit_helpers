@@ -3,7 +3,9 @@ import {ViewArticlePage} from '../../pages/article/ViewArticlePage';
 import {test} from '@playwright/test';
 
 export async function createNewArticle(page, article) {
-  await test.step(`Create article ${article.tags.length ? 'with tags' : 'without tags'}`, async () => {
+  const tags = Array.isArray(article.tags) ? article.tags : [];
+
+  await test.step(`Create article ${tags.length ? 'with tags' : 'without tags'}`, async () => {
     const createNewArticlePage = new CreateArticlePage(page);
     const viewArticlePage = new ViewArticlePage(page);
 
@@ -11,7 +13,7 @@ export async function createNewArticle(page, article) {
     await createNewArticlePage.fillTitleField(article.title);
     await createNewArticlePage.fillDescriptionField(article.description);
     await createNewArticlePage.fillTextField(article.text);
-    for (const tag of article.tags) {
+    for (const tag of tags) {
       await createNewArticlePage.fillTagField(tag);
     }
     await createNewArticlePage.clickPublishArticleButton();
