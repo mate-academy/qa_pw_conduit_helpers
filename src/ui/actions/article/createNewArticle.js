@@ -14,9 +14,13 @@ export async function createNewArticle (page, article) {
     await createArticlePage.fillTitleField(article.title);
     await createArticlePage.fillDescriptionField(article.description);
     await createArticlePage.fillTextField(article.text);
-    for (let tag of article.tags) {
-      await createArticlePage.addArticleTag(tag)
+    
+    if (article.tags){
+      for (let tag of article.tags) {
+        await createArticlePage.addArticleTag(tag)
+      }
     }
+    
     await createArticlePage.clickPublishArticleButton();
 
     await viewArticlePage.assertArticleTitleIsVisible(article.title);

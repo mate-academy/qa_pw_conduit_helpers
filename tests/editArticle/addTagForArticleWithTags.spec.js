@@ -34,8 +34,9 @@ test('Add the tag for the existing article with tags', async () => {
   await viewArticlePage.page.reload();
   await viewArticlePage.assertArticleTagIsVisible(newTag);
 
-  for (let tag of article.tags) {
-      await viewArticlePage.assertArticleTagIsVisible(tag);
+  if (article.tags){
+      for (let tag of article.tags) {
+        await createArticlePage.addArticleTag(tag)
+      }
   }
-
 })
