@@ -29,5 +29,7 @@ test('Add the tag for the existing article without tags', async () => {
   await createArticlePage.addArticleTag(newTag);
   await createArticlePage.clickUpdateArticleButton();
   
+  await viewArticlePage.page.waitForURL('**/article/**');
+  await viewArticlePage.page.reload();
   await viewArticlePage.assertArticleTagIsVisible(newTag);
 })

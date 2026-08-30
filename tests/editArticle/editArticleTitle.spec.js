@@ -21,7 +21,7 @@ test.beforeEach(async ({page}) =>{
   await createNewArticle(page, article)
 })
 
-test.only('Edit article title', async () => {
+test('Edit article title', async () => {
   let newTitle = faker.lorem.words();
 
   await viewArticlePage.clickOnEditArticleButton();
@@ -29,5 +29,7 @@ test.only('Edit article title', async () => {
   await createArticlePage.fillTitleField(newTitle);
   await createArticlePage.clickUpdateArticleButton();
 
+  await viewArticlePage.page.waitForURL('**/article/**');
+  await viewArticlePage.page.reload();
   await viewArticlePage.assertArticleTitleIsVisible(newTitle);
 })

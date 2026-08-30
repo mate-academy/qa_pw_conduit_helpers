@@ -22,7 +22,7 @@ test.beforeEach(async ({page}) =>{
   await createNewArticle(page, article)
 })
 
-test.only('Add the tag for the existing article with tags', async () => {
+test('Add the tag for the existing article with tags', async () => {
   let newTag = faker.lorem.word();
 
   await viewArticlePage.clickOnEditArticleButton();
@@ -30,9 +30,8 @@ test.only('Add the tag for the existing article with tags', async () => {
   await createArticlePage.addArticleTag(newTag);
   await createArticlePage.clickUpdateArticleButton();
   
+  await viewArticlePage.page.waitForURL('**/article/**');
   await viewArticlePage.page.reload();
-  await viewArticlePage.page.waitForLoadState('networkidle');
-
   await viewArticlePage.assertArticleTagIsVisible(newTag);
 
   for (let tag of article.tags) {

@@ -16,24 +16,25 @@ test.beforeEach(async ({page}) =>{
   createArticlePage = new CreateArticlePage(page)
   
   let user = generateNewUserData()
-  article = generateNewArticleData(2)
+  article = generateNewArticleData(3)
 
   await signUpUser(page, user)
   await createNewArticle(page, article)
 })
 
-test.only('Remove an article tag for the existing article with tag', async () => {
-  let newTag = faker.lorem.word();
-
+test('Remove an article tag for the existing article with tag', async () => {
   await viewArticlePage.clickOnEditArticleButton();
-  
-  await createArticlePage.addArticleTag(newTag);
+
+  let deleteTag = article.tags[1];
+  console.log(deleteTag)
+
+  await createArticlePage.deleteAddedTag(deleteTag);
   await createArticlePage.clickUpdateArticleButton();
   
-  await viewArticlePage.assertArticleTagIsVisible(newTag);
-
-  for (let tag of article.tags) {
-      await viewArticlePage.assertArticleTagIsVisible(tag);
-  }
+  await viewArticlePage.page.waitForURL('**/article/**');
+  await viewArticlePage.page.reload();
+  await viewArticlePage.assertArticleTagIsVisible(article.tags[0]);
+  await viewArticlePage.assertArticleTagIsVisible(article.tags[2]);
+  await viewArticlePage.assertArticleHasNotTag(deleteTag);
 
 })

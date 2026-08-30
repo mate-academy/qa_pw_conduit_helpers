@@ -20,8 +20,14 @@ export class ViewArticlePage {
   }
 
   async assertArticleTagIsVisible(tag) {
-    await test.step(`Assert the article has tag'`, async () => {
-      await expect(this.page.getByText(tag)).toBeVisible();
+    await test.step(`Assert the article has '${tag}' tag`, async () => {
+      await expect(this.page.getByRole('listitem').filter({ hasText: tag })).toBeVisible();
+    });
+  }
+
+  async assertArticleHasNotTag(tag) {
+    await test.step(`Assert the article has not '${tag}' tag`, async () => {
+      await expect(this.page.getByRole('listitem').filter({ hasText: tag })).toBeHidden();
     });
   }
 
