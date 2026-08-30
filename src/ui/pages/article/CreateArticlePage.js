@@ -6,8 +6,13 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.articleTagField = page.getByPlaceholder('Enter tags');
+    this.articleTag = page.locator('.tag-pill');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
+    });
+    this.updateArticleButton = page.getByRole('button', {
+      name: 'Update Article',
     });
     this.errorMessage = page.getByRole('list').nth(1);
   }
@@ -30,10 +35,35 @@ export class CreateArticlePage {
     });
   }
 
+  async addArticleTag(tag) {
+    await test.step(`Add tag to the article`, async () => {
+      await this.articleTagField.fill(tag);
+      await this.page.keyboard.press('Enter'); 
+    })
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
     });
+  }
+
+  async clickUpdateArticleButton() {
+    await test.step(`Click on the 'Update Article' button`, async () => {
+      await this.updateArticleButton.click()
+    })
+  }
+
+  async getTagNames() {
+    return await test.step(`Get added tag name`, async () => {
+      return await this.articleTag.nth(1).allTextContents()
+    })
+  }
+
+  async deleteAddedTag(tagName) {
+    await test.step(`Delete '${tagName}' tag`, async() => {
+      await this.page.getByText(tagName).locator('i').click()
+    })
   }
 
   async assertErrorMessageContainsText(messageText) {

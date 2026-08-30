@@ -7,5 +7,5 @@ export function generateNewUserData() {
     password: faker.internet.password(),
   };
 
-  return user;
+return user;
 }
