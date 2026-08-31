@@ -52,7 +52,7 @@ test('Add the tag for the existing article with tags', async ({ page }) => {
   const baseArticle = generateNewArticleData(1);
   const newArticle = generateNewArticleData(1);
   const tag = newArticle.tags[0];
-  await createAndEditArticle(page, baseArticle, { tagsToAdd: [tag] }, 1);
+  await createAndEditArticle(page, baseArticle, { tagsToAdd: [tag] });
 });
 
 test('Remove an article tag for the existing article with tag', async ({
