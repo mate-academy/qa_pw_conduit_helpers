@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
-import { CreateArticlePage } from '../../../ui/pages/article/CreateArticlePage';
+import { CreateArticlePage } from '../../pages/article/CreateArticlePage';
 import { HomePage } from '../../pages/HomePage';
-import { generateNewArticleData } from '../../../../src/common/testData/generateNewArticleData';
+import { generateNewArticleData } from '../../../common/testData/generateNewArticleData';
 
 export async function createNewArticle(page, customArticleData = null) {
   await test.step('Create article', async () => {
