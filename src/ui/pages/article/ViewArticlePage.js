@@ -17,4 +17,14 @@ export class ViewArticlePage {
       await expect(this.page.getByText(text)).toBeVisible();
     });
   }
+
+  async assertArticleTagsAreVisible(expectedTags) {
+    await test.step(`
+      Assert the article tags ${expectedTags} are visible`, async () => {
+      const tagLocators = this.page.locator('.tag-list .tag-default');
+      for (const tag of expectedTags) {
+        await expect(tagLocators).toContainText([tag]);
+      }
+    });
+  }
 }
