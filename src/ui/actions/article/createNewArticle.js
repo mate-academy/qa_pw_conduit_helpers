@@ -1,6 +1,6 @@
-import { HomePage } from '../../../pages/HomePage';
-import { CreateArticlePage } from '../../../pages/article/CreateArticlePage';
-import { ViewArticlePage } from '../../../pages/article/ViewArticlePage';
+import { HomePage } from '../../pages/HomePage';
+import { CreateArticlePage } from '../../pages/article/CreateArticlePage';
+import { ViewArticlePage } from '../../pages/article/ViewArticlePage';
 import { test } from '@playwright/test';
 
 export async function createNewArticle(page, article, tagNumber = 0) {
