@@ -1,3 +1,4 @@
+/* eslint-disable playwright/no-conditional-in-test */
 import { expect, test } from '@playwright/test';
 
 export class CreateArticlePage {
@@ -6,6 +7,7 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagField = page.getByRole('textbox', { name: 'Enter tags' });
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
@@ -27,6 +29,18 @@ export class CreateArticlePage {
   async fillTextField(text) {
     await test.step(`Fill the 'Text' field`, async () => {
       await this.textField.fill(text);
+    });
+  }
+
+  async fillTagField(tags) {
+    await test.step(`Fill the 'Tag' field`, async () => {
+      if (!tags || tags.length === 0) {
+        return;
+      }
+      for (const tag of tags) {
+        await this.tagField.fill(tag);
+        await this.tagField.press('Enter');
+      }
     });
   }
 
