@@ -18,7 +18,7 @@ export class SignUpPage {
 
   async fillUsernameField(username) {
     await test.step(`Fill the 'Username' field`, async () => {
-      await this.usernameField.fill(username);
+      await this.usernameField.fill(username.replace(/[^a-zA-Z0-9_]/g, ''));
     });
   }
 
