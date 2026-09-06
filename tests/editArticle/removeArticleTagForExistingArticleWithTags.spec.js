@@ -23,7 +23,7 @@ test('Remove the article Tag of an existing article', async ({ page }) => {
  
   await viewArticlePage.clickEditArticleButton();
   await editArticlePage.removeTag();
-  await editArticlePage.assertTagIsNotVisible([article.tags]);
+  await editArticlePage.assertTagIsNotVisible(article.tags[0]);
   await viewArticlePage.clickUpdateArticleButton();
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
 

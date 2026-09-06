@@ -28,7 +28,7 @@ test('Add a tag for an existing article without tags', async ({ page }) => {
  
   await viewArticlePage.clickEditArticleButton();
   await createArticlePage.fillTagField(tag); 
-  await editArticlePage.assertTagIsVisible(tag);
+  await editArticlePage.assertTagIsVisible(tag[0]);
   await editArticlePage.clickUpdateArticleButton();
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
   await viewArticlePage.assertArticleTagsAreVisible(tag);
