@@ -43,6 +43,6 @@ export class EditArticlePage {
     await test.step(`Assert the '${messageText}' error is shown`, async () => {
       await expect(this.errorMessageText).toContainText(messageText);
     }); 
-}
+  }
 }
 

@@ -22,7 +22,7 @@ test.beforeEach(async ({ page }) => {
   await createNewArticle(page, articleDesc);
 });
 
-test('Edit the title of an existing article', async ({ page }) => {
+test('Edit the Description of an existing article', async ({ page }) => {
   const newDescription = faker.lorem.words(3);
   const viewArticlePage = new ViewArticlePage(page);    
  

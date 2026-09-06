@@ -18,7 +18,7 @@ test.beforeEach(async ({ page }) => {
   await createNewArticle(page, article);
 });
 
-test('Edit the title of an existing article', async ({ page }) => {
+test('Remove the article Tag of an existing article', async ({ page }) => {
   const viewArticlePage = new ViewArticlePage(page);    
  
   await viewArticlePage.clickEditArticleButton();

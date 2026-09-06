@@ -22,15 +22,15 @@ test.beforeEach(async ({ page }) => {
   await createNewArticle(page, article);
 });
 
-test('Edit the title of an existing article', async ({ page }) => {
+test('Add a tag for an existing article without tags', async ({ page }) => {
   const tag = faker.lorem.words(1).split(' ');
   const viewArticlePage = new ViewArticlePage(page);    
  
   await viewArticlePage.clickEditArticleButton();
   await createArticlePage.fillTagField(tag); 
   await editArticlePage.assertTagIsVisible(tag);
-  await viewArticlePage.clickUpdateArticleButton();
+  await editArticlePage.clickUpdateArticleButton();
   await viewArticlePage.assertArticleTitleIsVisible(article.title);
-  await viewArticlePage.assertArticleTagsAreVisible([article.tags]);
+  await viewArticlePage.assertArticleTagsAreVisible(tag);
 
 });
