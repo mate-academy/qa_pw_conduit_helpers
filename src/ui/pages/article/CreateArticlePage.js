@@ -9,6 +9,8 @@ export class CreateArticlePage {
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
+    this.updateButton = page.getByRole('button', { name: 'Update Article' });
+    this.tagsField = page.getByPlaceholder('Enter tags');
     this.errorMessage = page.getByRole('list').nth(1);
   }
 
@@ -30,15 +32,62 @@ export class CreateArticlePage {
     });
   }
 
+  async fillTagsField(tags) {
+    await test.step(`Fill the 'Tags' field`, async () => {
+      for (const tag of tags) {
+        await this.tagsField.fill(tag);
+        await this.tagsField.press('Enter');
+      }
+    });
+  }
+
+  async clickUpdateButton() {
+    await test.step(`Click the 'Update article' button`, async () => {
+      await this.updateButton.click();
+    });
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
     });
   }
 
+  async submitArticleForm(article) {
+    await test.step(`Fill the 'Create article' form`, async () => {
+      await this.fillTitleField(article.title);
+      await this.fillDescriptionField(article.description);
+      await this.fillTextField(article.text);
+      if (article.tags) {
+        await this.fillTagsField(article.tags);
+      }
+      await this.clickPublishArticleButton();
+    });
+  }
+
   async assertErrorMessageContainsText(messageText) {
     await test.step(`Assert the '${messageText}' error is shown`, async () => {
       await expect(this.errorMessage).toContainText(messageText);
+    });
+  }
+
+  tagChipRemoveIcon(tag) {
+    return this.page
+      .locator('.tag-pill')
+      .filter({ hasText: tag })
+      .locator('i.ion-close-round');
+  }
+
+  async removeTag(tag) {
+    await test.step(`Remove the '${tag}' tag`, async () => {
+      await this.tagChipRemoveIcon(tag).click();
+      await expect(this.tagChipRemoveIcon(tag)).toHaveCount(0);
+    });
+  }
+
+  async assertArticleHasCorrectDescription(description) {
+    await test.step(`Assert article has correct description`, async () => {
+      await expect(this.descriptionField).toHaveValue(description);
     });
   }
 }

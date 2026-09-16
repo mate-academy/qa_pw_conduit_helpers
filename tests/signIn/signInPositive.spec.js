@@ -14,6 +14,7 @@ test.beforeEach(async ({ page }) => {
     email: 'test_new_user@gmail.com',
     password: 'newpass123!',
   };
+  
 });
 
 test('Successful `Sign in` flow test', async () => {
