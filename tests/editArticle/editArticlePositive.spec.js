@@ -15,23 +15,35 @@ test.describe('Edit article positive tests', () => {
     viewArticlePage = new ViewArticlePage(page);
 
     const user = generateNewUserData();
+
     await signUpUser(page, user);
   });
 
-  test('Edit the article title for the existing article', async ({
-    page,
-  }) => {
+  test('Edit the article title for the existing article', async ({ page }) => {
     const article = generateNewArticleData();
     await createNewArticle(page, article);
+
     const newTitle = generateNewArticleData().title;
 
     await viewArticlePage.clickEditArticleLink();
+
     await createArticlePage.assertTitleFieldHasValue(article.title);
-    await createArticlePage.clearTitleField();
+    await createArticlePage.clearField(createArticlePage.titleField);
     await createArticlePage.fillTitleField(newTitle);
     await createArticlePage.clickPublishArticleButton();
 
-    await viewArticlePage.assertArticleTitleIsVisible(newTitle);
+    // Re-open the editor and verify that the changes were saved.
+    await viewArticlePage.clickEditArticleLink();
+
+    await createArticlePage.assertTitleFieldHasValue(newTitle);
+    await createArticlePage.assertDescriptionFieldHasValue(
+      article.description,
+    );
+    await createArticlePage.assertTextFieldHasValue(article.text);
+
+    for (const tag of article.tags) {
+      await createArticlePage.assertTagIsVisible(tag);
+    }
   });
 
   test('Edit the article description for the existing article', async ({
@@ -39,36 +51,56 @@ test.describe('Edit article positive tests', () => {
   }) => {
     const article = generateNewArticleData();
     await createNewArticle(page, article);
+
     const newDescription = generateNewArticleData().description;
 
     await viewArticlePage.clickEditArticleLink();
+
     await createArticlePage.assertDescriptionFieldHasValue(
       article.description,
     );
-    await createArticlePage.clearDescriptionField();
+
+    await createArticlePage.clearField(createArticlePage.descriptionField);
     await createArticlePage.fillDescriptionField(newDescription);
     await createArticlePage.clickPublishArticleButton();
 
-    // The description isn't rendered on the article view page, so we
-    // re-open the editor and verify the field was persisted.
+    // Re-open the editor and verify that the changes were saved.
     await viewArticlePage.clickEditArticleLink();
+
+    await createArticlePage.assertTitleFieldHasValue(article.title);
     await createArticlePage.assertDescriptionFieldHasValue(newDescription);
+    await createArticlePage.assertTextFieldHasValue(article.text);
+
+    for (const tag of article.tags) {
+      await createArticlePage.assertTagIsVisible(tag);
+    }
   });
 
-  test('Edit the article text for the existing article', async ({
-    page,
-  }) => {
+  test('Edit the article text for the existing article', async ({ page }) => {
     const article = generateNewArticleData();
     await createNewArticle(page, article);
+
     const newText = generateNewArticleData().text;
 
     await viewArticlePage.clickEditArticleLink();
+
     await createArticlePage.assertTextFieldHasValue(article.text);
-    await createArticlePage.clearTextField();
+    await createArticlePage.clearField(createArticlePage.textField);
     await createArticlePage.fillTextField(newText);
     await createArticlePage.clickPublishArticleButton();
 
-    await viewArticlePage.assertArticleTextIsVisible(newText);
+    // Re-open the editor and verify that the changes were saved.
+    await viewArticlePage.clickEditArticleLink();
+
+    await createArticlePage.assertTitleFieldHasValue(article.title);
+    await createArticlePage.assertDescriptionFieldHasValue(
+      article.description,
+    );
+    await createArticlePage.assertTextFieldHasValue(newText);
+
+    for (const tag of article.tags) {
+      await createArticlePage.assertTagIsVisible(tag);
+    }
   });
 
   test('Add the tag for the existing article without tags', async ({
@@ -76,27 +108,30 @@ test.describe('Edit article positive tests', () => {
   }) => {
     const article = generateNewArticleData();
     await createNewArticle(page, article);
-    const newTag = generateNewArticleData(1).tags[0];
+
+    const newTag = `new-${Date.now()}`;
 
     await viewArticlePage.clickEditArticleLink();
+
     await createArticlePage.addTag(newTag);
     await createArticlePage.clickPublishArticleButton();
 
     await viewArticlePage.assertTagIsVisible(newTag);
   });
 
-  test('Add the tag for the existing article with tags', async ({
-    page,
-  }) => {
+  test('Add the tag for the existing article with tags', async ({ page }) => {
     const article = generateNewArticleData(2);
     await createNewArticle(page, article);
-    const newTag = generateNewArticleData(1).tags[0];
+
+    const newTag = `new-${Date.now()}`;
 
     await viewArticlePage.clickEditArticleLink();
+
     await createArticlePage.addTag(newTag);
     await createArticlePage.clickPublishArticleButton();
 
     await viewArticlePage.assertTagIsVisible(newTag);
+
     for (const tag of article.tags) {
       await viewArticlePage.assertTagIsVisible(tag);
     }
@@ -107,9 +142,11 @@ test.describe('Edit article positive tests', () => {
   }) => {
     const article = generateNewArticleData(1);
     await createNewArticle(page, article);
+
     const [tagToRemove] = article.tags;
 
     await viewArticlePage.clickEditArticleLink();
+
     await createArticlePage.removeTag(tagToRemove);
     await createArticlePage.clickPublishArticleButton();
 
@@ -121,28 +158,47 @@ test.describe('Edit article positive tests', () => {
   }) => {
     const article = generateNewArticleData();
     await createNewArticle(page, article);
+
     const updatedArticle = generateNewArticleData();
 
     await viewArticlePage.clickEditArticleLink();
+
     await createArticlePage.assertTitleFieldHasValue(article.title);
     await createArticlePage.assertDescriptionFieldHasValue(
       article.description,
     );
     await createArticlePage.assertTextFieldHasValue(article.text);
-    await createArticlePage.clearTitleField();
+
+    await createArticlePage.clearField(createArticlePage.titleField);
     await createArticlePage.fillTitleField(updatedArticle.title);
-    await createArticlePage.clearDescriptionField();
-    await createArticlePage.fillDescriptionField(updatedArticle.description);
-    await createArticlePage.clearTextField();
+
+    await createArticlePage.clearField(
+      createArticlePage.descriptionField,
+    );
+    await createArticlePage.fillDescriptionField(
+      updatedArticle.description,
+    );
+
+    await createArticlePage.clearField(createArticlePage.textField);
     await createArticlePage.fillTextField(updatedArticle.text);
+
     await createArticlePage.clickPublishArticleButton();
 
-    await viewArticlePage.assertArticleTitleIsVisible(updatedArticle.title);
-    await viewArticlePage.assertArticleTextIsVisible(updatedArticle.text);
-
+    // Re-open the editor and verify all updated values.
     await viewArticlePage.clickEditArticleLink();
+
+    await createArticlePage.assertTitleFieldHasValue(
+      updatedArticle.title,
+    );
     await createArticlePage.assertDescriptionFieldHasValue(
       updatedArticle.description,
     );
+    await createArticlePage.assertTextFieldHasValue(
+      updatedArticle.text,
+    );
+
+    for (const tag of article.tags) {
+      await createArticlePage.assertTagIsVisible(tag);
+    }
   });
 });

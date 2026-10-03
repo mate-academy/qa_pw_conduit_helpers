@@ -21,16 +21,19 @@ test.describe('Edit article negative tests', () => {
     viewArticlePage = new ViewArticlePage(page);
 
     const user = generateNewUserData();
+
     await signUpUser(page, user);
 
     article = generateNewArticleData();
+
     await createNewArticle(page, article);
     await viewArticlePage.clickEditArticleLink();
+
     await createArticlePage.assertTitleFieldHasValue(article.title);
   });
 
   test('Remove an article title for the existing article', async () => {
-    await createArticlePage.clearTitleField();
+    await createArticlePage.clearField(createArticlePage.titleField);
     await createArticlePage.clickPublishArticleButton();
 
     await createArticlePage.assertErrorMessageContainsText(
@@ -39,7 +42,7 @@ test.describe('Edit article negative tests', () => {
   });
 
   test('Remove an article description for the existing article', async () => {
-    await createArticlePage.clearDescriptionField();
+    await createArticlePage.clearField(createArticlePage.descriptionField);
     await createArticlePage.clickPublishArticleButton();
 
     await createArticlePage.assertErrorMessageContainsText(
@@ -48,7 +51,7 @@ test.describe('Edit article negative tests', () => {
   });
 
   test('Remove the article text for the existing article', async () => {
-    await createArticlePage.clearTextField();
+    await createArticlePage.clearField(createArticlePage.textField);
     await createArticlePage.clickPublishArticleButton();
 
     await createArticlePage.assertErrorMessageContainsText(

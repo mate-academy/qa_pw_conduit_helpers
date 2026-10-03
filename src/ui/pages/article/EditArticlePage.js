@@ -46,6 +46,12 @@ export class EditArticlePage {
     });
   }
 
+  async clearField(field) {
+    await test.step(`Clear the field`, async () => {
+      await field.clear();
+    });
+  }
+
   async clickUpdateArticleButton() {
     await test.step(`Click the 'Update Article' button`, async () => {
       await this.updateArticleButton.click();

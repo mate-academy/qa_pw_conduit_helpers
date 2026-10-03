@@ -9,17 +9,25 @@ import { expect, test } from '@playwright/test';
 export class CreateArticlePage {
   constructor(page) {
     this.page = page;
+
     this.titleField = page.getByPlaceholder('Article Title');
-    this.descriptionField = page.getByPlaceholder("What's this article about?");
-    this.textField = page.getByPlaceholder('Write your article (in markdown)');
+
+    this.descriptionField = page.getByPlaceholder(
+      "What's this article about?",
+    );
+
+    this.textField = page.getByPlaceholder(
+      'Write your article (in markdown)',
+    );
+
     this.tagField = page.getByPlaceholder('Enter tags');
-<<<<<<< HEAD
+
     this.tagList = page.locator('.tag-list');
-=======
->>>>>>> f147772603554f85c0a19f52b8583ed04d72f12d
+
     this.publishArticleButton = page.getByRole('button', {
-  name: /Publish Article|Update Article/,
-});
+      name: /Publish Article|Update Article/,
+    });
+
     this.errorMessage = page.getByRole('list').nth(1);
   }
 
@@ -29,21 +37,9 @@ export class CreateArticlePage {
     });
   }
 
-  async clearTitleField() {
-    await test.step(`Clear the 'Title' field`, async () => {
-      await this.titleField.fill('');
-    });
-  }
-
   async fillDescriptionField(description) {
     await test.step(`Fill the 'Description' field`, async () => {
       await this.descriptionField.fill(description);
-    });
-  }
-
-  async clearDescriptionField() {
-    await test.step(`Clear the 'Description' field`, async () => {
-      await this.descriptionField.fill('');
     });
   }
 
@@ -53,25 +49,19 @@ export class CreateArticlePage {
     });
   }
 
-<<<<<<< HEAD
-  async clearTextField() {
-    await test.step(`Clear the 'Text' field`, async () => {
-      await this.textField.fill('');
+  async clearField(field) {
+    await test.step(`Clear the field`, async () => {
+      await field.clear();
     });
   }
 
   async addTag(tag) {
     await test.step(`Add the '${tag}' tag`, async () => {
-=======
-  async fillTagField(tag) {
-    await test.step(`Fill the 'Tag' field`, async () => {
->>>>>>> f147772603554f85c0a19f52b8583ed04d72f12d
       await this.tagField.fill(tag);
       await this.tagField.press('Enter');
     });
   }
 
-<<<<<<< HEAD
   async removeTag(tag) {
     await test.step(`Remove the '${tag}' tag`, async () => {
       await this.tagList
@@ -81,8 +71,6 @@ export class CreateArticlePage {
     });
   }
 
-=======
->>>>>>> f147772603554f85c0a19f52b8583ed04d72f12d
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
@@ -90,9 +78,12 @@ export class CreateArticlePage {
   }
 
   async assertErrorMessageContainsText(messageText) {
-    await test.step(`Assert the '${messageText}' error is shown`, async () => {
-      await expect(this.errorMessage).toContainText(messageText);
-    });
+    await test.step(
+      `Assert error message contains '${messageText}'`,
+      async () => {
+        await expect(this.errorMessage).toContainText(messageText);
+      },
+    );
   }
 
   async assertTitleFieldHasValue(title) {
@@ -124,7 +115,9 @@ export class CreateArticlePage {
 
   async assertTagIsVisible(tag) {
     await test.step(`Assert the '${tag}' tag is visible`, async () => {
-      await expect(this.tagList.getByText(tag, { exact: true })).toBeVisible();
+      await expect(
+        this.tagList.getByText(tag, { exact: true }),
+      ).toBeVisible();
     });
   }
 

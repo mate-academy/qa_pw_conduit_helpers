@@ -3,38 +3,25 @@ import { test, expect } from '@playwright/test';
 export class ViewArticlePage {
   constructor(page) {
     this.page = page;
-
     this.articleTitleHeader = page.getByRole('heading');
-<<<<<<< HEAD
-    this.editArticleLink = page.getByRole('link', { name: 'Edit Article' })
-    .first();
+    this.editArticleLink = page
+      .getByRole('link', { name: 'Edit Article' })
+      .first();
+    this.deleteArticleButton = page
+      .getByRole('button', { name: 'Delete Article' })
+      .first();
     this.tagList = page.locator('.tag-list');
   }
 
   async clickEditArticleLink() {
     await test.step(`Click the 'Edit Article' link`, async () => {
       await this.editArticleLink.click();
-=======
-
-    this.editArticleButton = page
-      .getByRole('link', { name: 'Edit Article' })
-      .first();
-
-    this.deleteArticleButton = page
-      .getByRole('button', { name: 'Delete Article' })
-      .first();
-  }
-
-  async clickEditArticleButton() {
-    await test.step(`Click the 'Edit Article' button`, async () => {
-      await this.editArticleButton.click();
     });
   }
 
   async clickDeleteArticleButton() {
     await test.step(`Click the 'Delete Article' button`, async () => {
       await this.deleteArticleButton.click();
->>>>>>> f147772603554f85c0a19f52b8583ed04d72f12d
     });
   }
 
@@ -44,9 +31,21 @@ export class ViewArticlePage {
     });
   }
 
+  async assertArticleDescriptionIsVisible(description) {
+    await test.step(`Assert the article has correct description`, async () => {
+      await expect(this.page.getByText(description)).toBeVisible();
+    });
+  }
+
   async assertArticleTextIsVisible(text) {
     await test.step(`Assert the article has correct text`, async () => {
       await expect(this.page.getByText(text)).toBeVisible();
+    });
+  }
+
+  async assertArticleTagsContainText(tag) {
+    await test.step(`Assert the article tags contain '${tag}'`, async () => {
+      await expect(this.tagList).toContainText(tag);
     });
   }
 
