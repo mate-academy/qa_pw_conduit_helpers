@@ -1,6 +1,8 @@
 import { test } from '@playwright/test';
 import { SignInPage } from '../../src/ui/pages/auth/SignInPage';
 import { HomePage } from '../../src/ui/pages/HomePage';
+import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
+import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
 
 let signInPage;
 let homePage;
@@ -10,10 +12,9 @@ test.beforeEach(async ({ page }) => {
   signInPage = new SignInPage(page);
   homePage = new HomePage(page);
 
-  user = {
-    email: 'test_new_user@gmail.com',
-    password: 'newpass123!',
-  };
+  user = generateNewUserData();
+
+  await signUpUser(page, user);
 });
 
 test('Successful `Sign in` flow test', async () => {
