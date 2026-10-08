@@ -6,9 +6,12 @@ export class CreateArticlePage {
     this.titleField = page.getByPlaceholder('Article Title');
     this.descriptionField = page.getByPlaceholder(`What's this article about?`);
     this.textField = page.getByPlaceholder('Write your article (in markdown)');
+    this.tagsField = page.getByPlaceholder('Enter tags');
     this.publishArticleButton = page.getByRole('button', {
       name: 'Publish Article',
     });
+    this.updateArticleButton = page.getByRole('button', { 
+      name: 'Update Article' });
     this.errorMessage = page.getByRole('list').nth(1);
   }
 
@@ -30,9 +33,37 @@ export class CreateArticlePage {
     });
   }
 
+  async fillTagsField(tag) {
+    await test.step(`Fill the 'Tags' field`, async () => {
+      await this.tagsField.fill(tag);
+      await this.tagsField.press('Enter');
+    });
+  }
+
+  async removeTag(tag) {
+    await test.step(`Remove the '${tag}' tag`, async () => {
+      const tagItem = this.page.locator('.tag-default', { hasText: tag });
+      await tagItem.locator('i').click();
+    });
+  }
+
+  async clickUpdateArticleButton() {
+    await test.step(`Click the 'Update Article' button`, async () => {
+      await this.updateArticleButton.click();
+    })
+  }
+
   async clickPublishArticleButton() {
     await test.step(`Click the 'Publish Article' button`, async () => {
       await this.publishArticleButton.click();
+    });
+  }
+
+  async clickYourProfileImage() {
+    await test.step(`Click the 'Your profile image' button`, async () => {
+      await this.page.getByRole('link', 
+        { name: /your profile image/i }).click();
+        await this.page.waitForURL(/\/profile\//);
     });
   }
 
