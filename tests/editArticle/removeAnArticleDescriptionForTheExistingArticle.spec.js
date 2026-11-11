@@ -1,0 +1,34 @@
+import { test} from '@playwright/test';
+import { ViewArticlePage } from '../../src/ui/pages/article/ViewArticlePage';
+import { signUpUser } from '../../src/ui/actions/auth/signUpUser';
+import { createNewArticle } from '../../src/ui/actions/article/createNewArticle';
+import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
+import { generateNewArticleData} from '../../src/common/testData/generateNewArticleData';
+import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
+import { DESCRIPTION_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
+
+
+let viewArticlePage;
+let editArticlePage;
+
+test.beforeEach(async ({page}) => {
+    viewArticlePage = new ViewArticlePage(page);
+    editArticlePage = new EditArticlePage(page);
+
+    const user = generateNewUserData();
+    const article = generateNewArticleData(1);
+
+    await signUpUser(page, user);
+    await createNewArticle(page, article);
+});
+
+test('Remove article description', async () => {
+    const newDescription = '';
+
+    await viewArticlePage.openEditor();
+    await editArticlePage.editDescriptionField(newDescription);
+    await editArticlePage.assertDescriptionEdited(newDescription);
+    await editArticlePage.updateArticle();
+    await editArticlePage
+    .assertErrorWhenDescrIsEmpty(DESCRIPTION_CANNOT_BE_EMPTY);
+})

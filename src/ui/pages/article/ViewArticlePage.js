@@ -4,6 +4,12 @@ export class ViewArticlePage {
   constructor(page) {
     this.page = page;
     this.articleTitleHeader = page.getByRole('heading');
+    this.editAtricleButton = page
+    .getByRole('link', { name: 'Edit Article' }).nth(0);
+    this.theFirstTag = page
+    .locator('li.tag-default.tag-pill.tag-outline').nth(0);
+    this.theSecondTag = page.
+    locator('li.tag-default.tag-pill.tag-outline').nth(1);
   }
 
   async assertArticleTitleIsVisible(title) {
@@ -15,6 +21,46 @@ export class ViewArticlePage {
   async assertArticleTextIsVisible(text) {
     await test.step(`Assert the article has correct text'`, async () => {
       await expect(this.page.getByText(text)).toBeVisible();
+    });
+  }
+
+  async openEditor() {
+    await this.editAtricleButton.click();
+  }
+
+   async assertUpdatedArticleTitleIsVisible(title) {
+    await test.step(`Assert the article has correct title'`, async () => {
+      await expect(this.articleTitleHeader).toContainText(title);
+    });
+  }
+
+  async assertTagisVisible(tag) {
+    await test.step(`Assert that tag is visible`, async() => {
+      await expect(this.theFirstTag).toBeVisible(tag);
+    });
+  }
+
+  async assertTagHasCorrectText(tag) {
+    await test.step(`Assert tag has correct text`, async() => {
+      await expect(this.theFirstTag).toHaveText(tag);
+    });
+  }
+
+  async assertNewTagisVisible(tag) {
+    await test.step(`Assert that new tag is visible`, async() => {
+      await expect(this.theSecondTag).toBeVisible(tag);
+    });
+  }
+
+  async assertNewTagHasCorrectText(tag) {
+    await test.step(`Assert new tag has correct text`, async() => {
+      await expect(this.theSecondTag).toHaveText(tag);
+    });
+  }
+
+  async assertTagisDeleted() {
+    await test.step(`Assert tag is deleted`, async() => {
+      await expect(this.theFirstTag).toBeHidden();
     });
   }
 }
