@@ -25,7 +25,9 @@ export class ViewArticlePage {
   }
 
   async openEditor() {
-    await this.editAtricleButton.click();
+    await test.step(`Open an article editor`, async() => {
+      await this.editAtricleButton.click();
+    });
   }
 
    async assertUpdatedArticleTitleIsVisible(title) {
@@ -36,7 +38,7 @@ export class ViewArticlePage {
 
   async assertTagisVisible(tag) {
     await test.step(`Assert that tag is visible`, async() => {
-      await expect(this.existingTagTag).toBeVisible(tag);
+      await expect(this.existingTag).toBeVisible(tag);
     });
   }
 

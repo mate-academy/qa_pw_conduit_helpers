@@ -7,6 +7,7 @@ import { generateNewArticleData} from '../../src/common/testData/generateNewArti
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
 import { TITLE_CANNOT_BE_EMPTY } from '../../src/ui/constants/articleErrorMessages';
 
+
 let viewArticlePage;
 let editArticlePage;
 

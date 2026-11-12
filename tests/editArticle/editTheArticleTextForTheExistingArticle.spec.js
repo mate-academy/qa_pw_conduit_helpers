@@ -6,6 +6,7 @@ import { generateNewUserData } from '../../src/common/testData/generateNewUserDa
 import { generateNewArticleData } from '../../src/common/testData/generateNewArticleData';
 import { generateNewText } from '../../src/common/testData/generateNewArticleData';
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
+import { reloadPage } from '../../src/ui/actions/article/waitForUrlAndReloadHelpers';
 
 let viewArticlePage;
 let editArticlePage;
@@ -28,7 +29,6 @@ test('Edit the article text', async ({page}) => {
     await editArticlePage.editTextField(newText);
     await editArticlePage.assertTextEdited(newText);
     await editArticlePage.updateArticle();
-    await page.waitForURL('**/article/**');
-    await page.reload();
+    await reloadPage(page);
     await viewArticlePage.assertArticleTextIsVisible(newText);
 })

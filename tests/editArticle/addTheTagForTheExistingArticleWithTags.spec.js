@@ -5,6 +5,7 @@ import { createNewArticle } from '../../src/ui/actions/article/createNewArticle'
 import { generateNewUserData } from '../../src/common/testData/generateNewUserData';
 import { generateNewArticleData, generateTag } from '../../src/common/testData/generateNewArticleData';
 import { EditArticlePage } from '../../src/ui/pages/article/EditArticlePage';
+import { reloadPage } from '../../src/ui/actions/article/waitForUrlAndReloadHelpers';
 
 let viewArticlePage;
 let editArticlePage;
@@ -25,10 +26,9 @@ test('Add tag for the article with tags', async ({page}) => {
     
     await viewArticlePage.openEditor();
     await editArticlePage.addNewTag(tag);
-    await page.keyboard.press('Enter');
+    //await page.keyboard.press('Enter');//
     await editArticlePage.updateArticle();
-    await page.waitForURL('**/article/**');
-    await page.reload();
+    await reloadPage(page);
     //await viewArticlePage.assertNewTagisVisible(tag);//
     await viewArticlePage.assertNewTagHasCorrectText(tag);
 })
