@@ -20,11 +20,11 @@ test.beforeEach(async ({page}) => {
     await createNewArticle(page, article);
 });
 
-test('Add tag for the article with tags', async ({page}) => {
+test('Remove tag for the article with tags', async ({page}) => {
     const tag = '';
     
     await viewArticlePage.openEditor();
-    await editArticlePage.deleteTag();
+    await editArticlePage.deleteTag(tag);
     await page.keyboard.press('Enter');
     await editArticlePage.updateArticle();
     await page.waitForURL('**/article/**');

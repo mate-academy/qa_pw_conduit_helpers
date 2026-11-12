@@ -22,7 +22,7 @@ test.beforeEach(async ({page}) => {
     await createNewArticle(page, article);
 });
 
-test('Remove article description', async () => {
+test('Remove the article text', async () => {
     const newText = '';
 
     await viewArticlePage.openEditor();

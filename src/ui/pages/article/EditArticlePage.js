@@ -12,9 +12,9 @@ export class EditArticlePage{
         this.updateButton = page
         .getByRole('button', { name: 'Update Article' });
         this.removeIcon = page.locator('.ion-close-round').nth(0);
-        this.errorTitleEmpty = page.getByText('Article title cannot be empty');
-        this.errorDescrEmpty = page.getByText('Article description cannot be empty');
-        this.errorBodyEmpty = page.getByText('Article body cannot be empty');
+        this.titleEmpty = page.getByText('Article title cannot be empty');
+        this.descrEmpty = page.getByText('Article description cannot be empty');
+        this.bodyEmpty = page.getByText('Article body cannot be empty');
     }
 
     async editTitleField(newTitle) {
@@ -63,6 +63,7 @@ export class EditArticlePage{
     async addNewTag(tag){
         await test.step(`Add new tag`, async() => {
             await this.tagsTextField.fill(tag);
+            await this.page.keyboard.press('Enter');
         });
     }
 
@@ -75,7 +76,7 @@ export class EditArticlePage{
     async assertErrorWhenTitleIsEmpty(messageText){
         await test.step(`Assert that error is displayed when title is empty`,
             async() => {
-            await expect(this.errorTitleEmpty).toHaveText(messageText);
+            await expect(this.titleEmpty).toHaveText(messageText);
             });
     }
 
@@ -83,7 +84,7 @@ export class EditArticlePage{
         await test.step(`Assert that error is displayed 
         when description is empty`,
         async() => {
-            await expect(this.errorDescrEmpty).toHaveText(messageText);
+            await expect(this.descrEmpty).toHaveText(messageText);
         });
     }
 
@@ -91,7 +92,7 @@ export class EditArticlePage{
         await test.step(`Assert that error is displayed 
         when text is empty`,
         async() => {
-            await expect(this.errorBodyEmpty).toHaveText(messageText);
+            await expect(this.bodyEmpty).toHaveText(messageText);
         });
     }
 }
